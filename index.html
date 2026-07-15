@@ -1,1 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Crew 2140</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ridge-black:#171d1b;
+    --pine:#25382c;
+    --pine-light:#324a3b;
+    --parchment:#efe8d8;
+    --parchment-dim:#e2d9c3;
+    --rust:#b5542a;
+    --rust-light:#d16a3d;
+    --topo-gold:#c9a55c;
+    --slate:#7e97a1;
+    --line:rgba(239,232,216,0.14);
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ridge-black);
+    color:var(--parchment);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Bebas Neue', sans-serif;
+    letter-spacing:0.03em;
+    font-weight:400;
+    line-height:0.95;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
 
+  /* topo background texture */
+  .topo-bg{
+    position:fixed; inset:0; z-index:-1; opacity:0.5;
+    background:
+      repeating-radial-gradient(circle at 20% 30%, transparent 0, transparent 40px, var(--line) 41px, transparent 42px, transparent 90px),
+      repeating-radial-gradient(circle at 85% 75%, transparent 0, transparent 55px, var(--line) 56px, transparent 57px, transparent 120px);
+    background-color:var(--ridge-black);
+  }
+
+  /* ===== NAV — trail signpost ===== */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:linear-gradient(180deg, var(--ridge-black) 80%, transparent);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-wrap{
+    max-width:1180px; margin:0 auto; padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .brand{display:flex; align-items:center; gap:12px; text-decoration:none;}
+  .brand-badge{
+    width:44px; height:44px; border-radius:50%;
+    background:var(--pine); border:2px solid var(--topo-gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Bebas Neue'; font-size:14px; color:var(--topo-gold);
+    flex-shrink:0;
+  }
+  .brand-text{display:flex; flex-direction:column; line-height:1;}
+  .brand-text .b1{font-family:'Bebas Neue'; font-size:22px; letter-spacing:0.04em;}
+  .brand-text .b2{font-family:'JetBrains Mono'; font-size:10px; color:var(--slate); letter-spacing:0.12em; margin-top:2px;}
+
+  nav.tabs{display:flex; gap:2px; flex-wrap:wrap;}
+  nav.tabs button{
+    background:none; border:none; color:var(--parchment-dim);
+    font-family:'JetBrains Mono'; font-size:12.5px; letter-spacing:0.06em;
+    padding:10px 14px; cursor:pointer; position:relative; text-transform:uppercase;
+    transition:color 0.2s;
+  }
+  nav.tabs button:hover{color:var(--parchment);}
+  nav.tabs button.active{color:var(--topo-gold);}
+  nav.tabs button.active::after{
+    content:''; position:absolute; left:14px; right:14px; bottom:2px; height:2px; background:var(--rust);
+  }
+  .nav-cta{
+    background:var(--rust); color:var(--parchment); border:none;
+    font-family:'JetBrains Mono'; font-size:12px; letter-spacing:0.05em;
+    padding:10px 18px; border-radius:2px; cursor:pointer; white-space:nowrap;
+    transition:background 0.2s;
+  }
+  .nav-cta:hover{background:var(--rust-light);}
+  .burger{display:none; background:none; border:1px solid var(--line); color:var(--parchment); padding:8px 12px; border-radius:2px;}
+
+  /* ===== PANELS ===== */
+  main{max-width:1180px; margin:0 auto; padding:0 24px;}
+  .panel{display:none; animation:fade 0.4s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  section{padding:64px 0;}
+  section.tight{padding:40px 0;}
+  .eyebrow{
+    font-family:'JetBrains Mono'; font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--rust-light); margin-bottom:14px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--rust-light);}
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:80px 0 60px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;
+  }
+  .hero h1{font-size:clamp(64px,9vw,132px); color:var(--parchment); margin:0;}
+  .hero h1 .accent{color:var(--topo-gold);}
+  .hero p.lead{font-size:19px; color:var(--parchment-dim); max-width:46ch; margin:20px 0 30px;}
+  .hero-buttons{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--rust); color:var(--parchment); padding:14px 26px; border:none; border-radius:2px;
+    font-family:'JetBrains Mono'; font-size:13px; letter-spacing:0.05em; text-transform:uppercase;
+    cursor:pointer; transition:background .2s; text-decoration:none; display:inline-block;
+  }
+  .btn-primary:hover{background:var(--rust-light);}
+  .btn-ghost{
+    background:none; border:1px solid var(--slate); color:var(--parchment); padding:13px 26px; border-radius:2px;
+    font-family:'JetBrains Mono'; font-size:13px; letter-spacing:0.05em; text-transform:uppercase;
+    cursor:pointer; text-decoration:none; display:inline-block; transition:border-color .2s, color .2s;
+  }
+  .btn-ghost:hover{border-color:var(--topo-gold); color:var(--topo-gold);}
+
+  .hero-mark{
+    background:var(--pine); border:1px solid var(--line); border-radius:6px; padding:20px; box-shadow:var(--shadow);
+  }
+
+  .stat-row{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-top:56px;
+  }
+  .stat{background:var(--ridge-black); padding:24px 20px;}
+  .stat .num{font-family:'Bebas Neue'; font-size:44px; color:var(--topo-gold);}
+  .stat .label{font-family:'JetBrains Mono'; font-size:11px; color:var(--slate); letter-spacing:0.08em; text-transform:uppercase; margin-top:4px;}
+
+  /* ===== GENERIC SECTION HEADS ===== */
+  .section-head{max-width:640px; margin-bottom:40px;}
+  .section-head h2{font-size:clamp(38px,5vw,58px); color:var(--parchment);}
+  .section-head p{color:var(--parchment-dim); font-size:16px;}
+
+  /* ===== ABOUT ===== */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start;}
+  .value-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:18px;}
+  .value-list li{display:flex; gap:16px; align-items:flex-start; border-bottom:1px solid var(--line); padding-bottom:18px;}
+  .value-list .vlabel{font-family:'JetBrains Mono'; font-size:12px; color:var(--rust-light); width:88px; flex-shrink:0; padding-top:3px;}
+  .value-list .vtext strong{color:var(--parchment); display:block; margin-bottom:3px; font-size:16px;}
+  .value-list .vtext span{color:var(--parchment-dim); font-size:14.5px;}
+
+  /* ===== ADVENTURES / CARDS ===== */
+  .card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px;}
+  .card{
+    background:var(--pine); border:1px solid var(--line); border-radius:6px; overflow:hidden;
+    transition:transform .25s, border-color .25s; display:flex; flex-direction:column;
+  }
+  .card:hover{transform:translateY(-4px); border-color:var(--topo-gold);}
+  .card-art{background:var(--ridge-black); aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; padding:14px;}
+  .card-body{padding:20px 22px 24px;}
+  .card-body h3{font-size:24px; color:var(--parchment); margin:0 0 8px;}
+  .card-body p{color:var(--parchment-dim); font-size:14.5px; margin:0;}
+
+  /* ===== EVENTS ===== */
+  .cal-status{
+    font-family:'JetBrains Mono'; font-size:12.5px; color:var(--slate);
+    display:none; align-items:center; gap:8px; margin-bottom:22px; padding:10px 14px;
+    border:1px solid var(--line); border-radius:4px; background:var(--pine);
+  }
+  .cal-status.show{display:flex;}
+  .cal-status.error{color:var(--rust-light); border-color:var(--rust);}
+  .cal-status.ok{color:var(--topo-gold); border-color:var(--topo-gold);}
+  .timeline{border-left:2px dashed var(--slate); margin-left:8px; padding-left:0;}
+  .tl-item{position:relative; padding:0 0 36px 32px;}
+  .tl-item:last-child{padding-bottom:4px;}
+  .tl-item::before{
+    content:''; position:absolute; left:-8px; top:2px; width:14px; height:14px; border-radius:50%;
+    background:var(--rust); border:3px solid var(--ridge-black); outline:2px solid var(--topo-gold);
+  }
+  .tl-date{font-family:'JetBrains Mono'; color:var(--topo-gold); font-size:13px; letter-spacing:0.05em;}
+  .tl-item h3{font-size:22px; margin:6px 0 6px; color:var(--parchment);}
+  .tl-item p{color:var(--parchment-dim); margin:0; font-size:14.5px;}
+  .tl-tag{
+    display:inline-block; margin-top:8px; font-family:'JetBrains Mono'; font-size:10.5px;
+    color:var(--ridge-black); background:var(--slate); padding:3px 8px; border-radius:2px; letter-spacing:0.05em;
+  }
+
+  /* ===== JOIN — numbered steps (real sequential process) ===== */
+  .steps{display:flex; flex-direction:column; gap:0;}
+  .step{display:grid; grid-template-columns:64px 1fr; gap:20px; padding:26px 0; border-bottom:1px solid var(--line);}
+  .step:first-child{padding-top:0;}
+  .step-num{font-family:'Bebas Neue'; font-size:46px; color:var(--pine-light); -webkit-text-stroke:1px var(--topo-gold);}
+  .step h3{margin:0 0 6px; font-size:22px; color:var(--parchment);}
+  .step p{margin:0; color:var(--parchment-dim); font-size:14.5px; max-width:60ch;}
+
+  .req-box{
+    background:var(--pine); border:1px solid var(--line); border-radius:6px; padding:26px 28px; margin-top:40px;
+  }
+  .req-box h3{margin:0 0 14px; font-size:22px; color:var(--topo-gold);}
+  .req-box ul{margin:0; padding-left:20px; color:var(--parchment-dim); font-size:14.5px;}
+  .req-box li{margin-bottom:8px;}
+
+  /* ===== CONTACT ===== */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  .info-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:20px;}
+  .info-list li{display:flex; gap:16px;}
+  .info-icon{
+    width:40px; height:40px; border-radius:50%; background:var(--pine); border:1px solid var(--topo-gold);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--topo-gold); font-size:16px;
+  }
+  .info-list .itext strong{display:block; color:var(--parchment); font-size:15px;}
+  .info-list .itext span, .info-list .itext a{color:var(--parchment-dim); font-size:14.5px; text-decoration:none;}
+  .info-list .itext a:hover{color:var(--topo-gold);}
+
+  form.contact-form{display:flex; flex-direction:column; gap:16px;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-family:'JetBrains Mono'; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--slate);}
+  .field input, .field select, .field textarea{
+    background:var(--ridge-black); border:1px solid var(--line); color:var(--parchment);
+    padding:12px 14px; border-radius:3px; font-family:'Work Sans'; font-size:14.5px; outline:none;
+    transition:border-color .2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--topo-gold);}
+  .field textarea{resize:vertical; min-height:100px;}
+  .form-note{font-size:13px; color:var(--slate); margin-top:-4px;}
+
+  footer{border-top:1px solid var(--line); padding:32px 24px; text-align:center;}
+  footer .fwrap{max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; align-items:center;}
+  footer p{margin:0; color:var(--slate); font-size:13px; font-family:'JetBrains Mono';}
+  .social{display:flex; gap:16px;}
+  .social a{color:var(--parchment-dim); text-decoration:none; font-size:13px; font-family:'JetBrains Mono';}
+  .social a:hover{color:var(--topo-gold);}
+
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr; padding-top:40px;}
+    .about-grid, .contact-grid{grid-template-columns:1fr;}
+    nav.tabs{display:none; position:absolute; top:100%; left:0; right:0; background:var(--ridge-black); flex-direction:column; border-bottom:1px solid var(--line); padding:8px 24px;}
+    nav.tabs.open{display:flex;}
+    .burger{display:block;}
+    .nav-cta{display:none;}
+  }
+  :focus-visible{outline:2px solid var(--topo-gold); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .panel{animation:none;}
+    .card{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="topo-bg"></div>
+
+<header>
+  <div class="nav-wrap">
+    <a href="#" class="brand" onclick="showPanel('home');return false;">
+      <div class="brand-badge">2140</div>
+      <div class="brand-text">
+        <span class="b1">Venture Crew 2140</span>
+        <span class="b2">CHARTERED · YOUTH LED</span>
+      </div>
+    </a>
+    <button class="burger" onclick="document.querySelector('nav.tabs').classList.toggle('open')" aria-label="Toggle menu">☰</button>
+    <nav class="tabs">
+      <button data-panel="home" class="active" onclick="showPanel('home')">Home</button>
+      <button data-panel="about" onclick="showPanel('about')">About</button>
+      <button data-panel="adventures" onclick="showPanel('adventures')">Adventures</button>
+      <button data-panel="events" onclick="showPanel('events')">Events</button>
+      <button data-panel="join" onclick="showPanel('join')">Join</button>
+      <button data-panel="contact" onclick="showPanel('contact')">Contact</button>
+    </nav>
+    <button class="nav-cta" onclick="showPanel('join')">Sign Up</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <section class="panel active" id="home">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Venturing · BSA Crew 2140</div>
+        <h1>ADVENTURE<br>IS THE<br><span class="accent">CURRICULUM</span></h1>
+        <p class="lead">We're a youth-led crew for young men and women ages 14&ndash;20 who'd rather learn on a summit, a river, or a rock face than in a classroom. Backpacking, climbing, paddling, and a lot of trip-planning spreadsheets.</p>
+        <div class="hero-buttons">
+          <a href="#" class="btn-primary" onclick="showPanel('join');return false;">Sign Up For A Meeting</a>
+          <a href="#" class="btn-ghost" onclick="showPanel('adventures');return false;">See Our Trips</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><div class="num">14&ndash;20</div><div class="label">Age Range</div></div>
+          <div class="stat"><div class="num">6+</div><div class="label">High Adventure Trips / Yr</div></div>
+          <div class="stat"><div class="num">100%</div><div class="label">Youth Led</div></div>
+        </div>
+      </div>
+      <div class="hero-mark">
+        <svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="420" fill="#171d1b"/>
+          <polyline points="0,300 60,300 90,260 120,300 400,300" fill="none" stroke="#324a3b" stroke-width="2"/>
+          <polyline points="0,320 50,320 80,290 110,320 400,320" fill="none" stroke="#324a3b" stroke-width="2"/>
+          <polyline points="0,340 40,340 70,315 100,340 400,340" fill="none" stroke="#324a3b" stroke-width="2"/>
+          <polygon points="60,300 150,140 240,300" fill="#25382c" stroke="#c9a55c" stroke-width="2"/>
+          <polygon points="180,300 260,180 340,300" fill="#324a3b" stroke="#c9a55c" stroke-width="1.5"/>
+          <polygon points="130,220 150,190 170,220" fill="#efe8d8" opacity="0.9"/>
+          <polygon points="230,210 250,180 270,210" fill="#efe8d8" opacity="0.9"/>
+          <circle cx="330" cy="90" r="34" fill="#c9a55c" opacity="0.85"/>
+          <g>
+            <polygon points="170,380 190,320 210,380" fill="#b5542a"/>
+            <polygon points="180,380 195,335 210,380" fill="#d16a3d"/>
+            <line x1="150" y1="380" x2="230" y2="380" stroke="#efe8d8" stroke-width="3"/>
+          </g>
+          <circle cx="120" cy="370" r="10" fill="#efe8d8"/>
+          <rect x="110" y="382" width="20" height="26" fill="#7e97a1"/>
+          <line x1="95" y1="392" x2="145" y2="392" stroke="#efe8d8" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="panel" id="about">
+    <div class="section-head">
+      <div class="eyebrow">Who We Are</div>
+      <h2>Run By Members, Backed By Adults</h2>
+      <p>Venturing is the Boy Scouts of America's program for older youth, built around high adventure, leadership, and a crew government that members actually run.</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p style="color:var(--parchment-dim); font-size:16px;">Crew 2140 was chartered by our sponsoring organization to give teens a program that treats them like the capable adults they're becoming. Every trip, budget line, and safety plan starts with youth officers &mdash; our adult Advisors coach from the sideline instead of running the show.</p>
+        <p style="color:var(--parchment-dim); font-size:16px;">We meet twice a month during the school year to plan logistics, train on outdoor skills, and vote on where we're headed next. Then we go do it &mdash; rain, shine, or occasional minor snow event.</p>
+        <svg style="margin-top:28px;" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="500" height="200" rx="6" fill="#25382c"/>
+          <path d="M0 150 Q 60 110 120 150 T 240 150 T 360 150 T 500 150" fill="none" stroke="#7e97a1" stroke-width="2" opacity="0.6"/>
+          <path d="M0 165 Q 60 130 120 165 T 240 165 T 360 165 T 500 165" fill="none" stroke="#7e97a1" stroke-width="2" opacity="0.4"/>
+          <circle cx="90" cy="90" r="26" fill="#c9a55c"/>
+          <rect x="70" y="116" width="40" height="50" rx="8" fill="#b5542a"/>
+          <circle cx="220" cy="80" r="26" fill="#d16a3d"/>
+          <rect x="200" y="106" width="40" height="60" rx="8" fill="#7e97a1"/>
+          <circle cx="350" cy="95" r="26" fill="#efe8d8"/>
+          <rect x="330" y="121" width="40" height="45" rx="8" fill="#324a3b"/>
+          <path d="M40 170 L 460 170" stroke="#c9a55c" stroke-width="2" stroke-dasharray="4 6"/>
+        </svg>
+      </div>
+      <ul class="value-list">
+        <li>
+          <div class="vlabel">STRUCTURE</div>
+          <div class="vtext"><strong>Youth Officers</strong><span>President, VP of Program, VP of Administration, Guide, and committee chairs elected each year by the crew.</span></div>
+        </li>
+        <li>
+          <div class="vlabel">SUPPORT</div>
+          <div class="vtext"><strong>Adult Advisors</strong><span>Certified in Youth Protection Training and outdoor safety, present on every trip, quiet in every meeting.</span></div>
+        </li>
+        <li>
+          <div class="vlabel">STANDARD</div>
+          <div class="vtext"><strong>Safety First</strong><span>Every high adventure trip follows BSA's Guide to Safe Scouting and Tour &amp; Activity Plans, no exceptions.</span></div>
+        </li>
+        <li>
+          <div class="vlabel">OPEN TO</div>
+          <div class="vtext"><strong>Everyone 14&ndash;20</strong><span>Co-ed, no Scouting background required &mdash; just a willingness to carry your own pack.</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ ADVENTURES ============ -->
+  <section class="panel" id="adventures">
+    <div class="section-head">
+      <div class="eyebrow">What We Do</div>
+      <h2>Trips We Actually Run</h2>
+      <p>A sample of the program &mdash; the exact lineup shifts every year based on what the crew votes for.</p>
+    </div>
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-art">
+          <svg viewBox="0 0 200 130" width="100%">
+            <rect width="200" height="130" fill="#171d1b"/>
+            <polygon points="20,110 60,40 100,110" fill="#324a3b"/>
+            <polygon points="80,110 130,30 180,110" fill="#25382c" stroke="#c9a55c" stroke-width="1.5"/>
+            <polygon points="70,70 80,55 90,70" fill="#efe8d8"/>
+            <polygon points="120,60 130,45 140,60" fill="#efe8d8"/>
+            <polygon points="60,95 80,65 100,95" fill="#b5542a" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Backpacking</h3>
+          <p>Multi-day treks on regional trail systems &mdash; trip planning, food-pack prep, and Leave No Trace practice built in.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-art">
+          <svg viewBox="0 0 200 130" width="100%">
+            <rect width="200" height="130" fill="#171d1b"/>
+            <path d="M0 90 Q 40 70 80 90 T 160 90 T 200 90 L 200 130 L 0 130 Z" fill="#324a3b"/>
+            <path d="M0 100 Q 40 85 80 100 T 160 100 T 200 100 L 200 130 L 0 130 Z" fill="#7e97a1" opacity="0.6"/>
+            <ellipse cx="110" cy="80" rx="34" ry="9" fill="#b5542a"/>
+            <rect x="100" y="66" width="6" height="18" fill="#efe8d8"/>
+            <circle cx="98" cy="70" r="7" fill="#c9a55c"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Whitewater Rafting &amp; Kayaking</h3>
+          <p>Guided river days that build toward crew-led paddling once everyone's checked off swim and safety skills.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-art">
+          <svg viewBox="0 0 200 130" width="100%">
+            <rect width="200" height="130" fill="#171d1b"/>
+            <polygon points="30,120 100,15 170,120" fill="#25382c" stroke="#c9a55c" stroke-width="1.5"/>
+            <line x1="100" y1="15" x2="70" y2="70" stroke="#efe8d8" stroke-width="1"/>
+            <line x1="100" y1="15" x2="120" y2="80" stroke="#efe8d8" stroke-width="1"/>
+            <line x1="70" y1="70" x2="90" y2="60" stroke="#efe8d8" stroke-width="1"/>
+            <circle cx="112" cy="55" r="5" fill="#d16a3d"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Rock Climbing &amp; Rappelling</h3>
+          <p>Top-rope days at a local crag or gym, run by climb-certified youth instructors and Advisors.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-art">
+          <svg viewBox="0 0 200 130" width="100%">
+            <rect width="200" height="130" fill="#171d1b"/>
+            <polygon points="20,120 60,50 100,120" fill="#efe8d8" opacity="0.9"/>
+            <polygon points="80,120 120,40 160,120" fill="#c9a55c" opacity="0.7"/>
+            <circle cx="150" cy="30" r="14" fill="#efe8d8"/>
+            <rect x="0" y="120" width="200" height="10" fill="#7e97a1"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Winter Camping</h3>
+          <p>Cold-weather shelter building and layering clinics, capped by an overnight snow camp for those who are ready.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-art">
+          <svg viewBox="0 0 200 130" width="100%">
+            <rect width="200" height="130" fill="#171d1b"/>
+            <polygon points="170,110 190,60 210,110" fill="#324a3b"/>
+            <polygon points="20,20 40,40 20,60 0,40" fill="#b5542a"/>
+            <polygon points="60,25 80,45 60,65 40,45" fill="#d16a3d"/>
+            <polygon points="100,20 120,40 100,60 80,40" fill="#c9a55c"/>
+            <line x1="0" y1="110" x2="200" y2="110" stroke="#7e97a1" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>National High Adventure Bases</h3>
+          <p>Crew fundraises toward a flagship trip &mdash; Philmont, Sea Base, or Northern Tier &mdash; every two to three years.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-art">
+          <svg viewBox="0 0 200 130" width="100%">
+            <rect width="200" height="130" fill="#171d1b"/>
+            <circle cx="100" cy="60" r="30" fill="#25382c" stroke="#c9a55c" stroke-width="2"/>
+            <polygon points="100,40 106,55 122,55 109,65 114,80 100,71 86,80 91,65 78,55 94,55" fill="#c9a55c"/>
+            <rect x="70" y="100" width="60" height="8" fill="#7e97a1"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Leadership &amp; Awards</h3>
+          <p>Officer training, the Venturing award trail, and mentorship for anyone chasing the Summit Award.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ EVENTS ============ -->
+  <section class="panel" id="events">
+    <div class="section-head">
+      <div class="eyebrow">Calendar</div>
+      <h2>Coming Up</h2>
+      <p id="cal-subhead">Sample schedule &mdash; connect your Google Calendar below to replace these automatically.</p>
+    </div>
+    <div id="cal-status" class="cal-status"></div>
+    <div class="timeline" id="cal-timeline">
+      <!-- Populated by loadGoogleCalendar() in the script below.
+           If GOOGLE_CALENDAR_ID / GOOGLE_API_KEY aren't set, these sample
+           events are shown instead so the page never looks empty. -->
+      <div class="tl-item">
+        <div class="tl-date">AUG 4 &middot; 7:00 PM</div>
+        <h3>Crew Meeting &mdash; Trip Vote</h3>
+        <p>Regular meeting at the chartering org's hall. We're voting on the fall backpacking route.</p>
+        <span class="tl-tag">MEETING</span>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">AUG 16&ndash;18</div>
+        <h3>Fall Backpacking Trip</h3>
+        <p>Three-day shakedown hike to test gear and crews ahead of the bigger autumn trek.</p>
+        <span class="tl-tag">TRIP</span>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">SEP 1 &middot; 7:00 PM</div>
+        <h3>New Member Night</h3>
+        <p>Open house for anyone curious about Venturing &mdash; no commitment, just come hear how it works.</p>
+        <span class="tl-tag">OPEN HOUSE</span>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">SEP 22 &middot; 8:00 AM</div>
+        <h3>Whitewater Day Trip</h3>
+        <p>Guided river run with a local outfitter, swim check required the week before.</p>
+        <span class="tl-tag">TRIP</span>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">OCT 6 &middot; 7:00 PM</div>
+        <h3>Officer Elections</h3>
+        <p>Crew votes in next term's President, VP of Program, VP of Administration, and Guide.</p>
+        <span class="tl-tag">MEETING</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ JOIN ============ -->
+  <section class="panel" id="join">
+    <div class="section-head">
+      <div class="eyebrow">Get Involved</div>
+      <h2>How To Join</h2>
+      <p>It's a short path from curious to card-carrying crew member.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div><h3>Reach out</h3><p>Send us a message using the contact form or email below &mdash; tell us your age and what you're hoping to do outdoors.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div><h3>Visit a meeting</h3><p>Come to a regular meeting or a New Member Night as a guest, no paperwork or payment required for your first visit.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div><h3>Complete the application</h3><p>Fill out the BSA Youth Application and, if you're a parent joining as an Advisor, the Adult Application plus Youth Protection Training.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div><h3>Pay dues &amp; gear up</h3><p>Annual registration plus crew dues covers BSA membership and insurance. We'll walk you through what gear you actually need to start.</p></div>
+      </div>
+    </div>
+
+    <div class="req-box">
+      <h3>Eligibility</h3>
+      <ul>
+        <li>Age 14 (and completed 8th grade) through 20 years old.</li>
+        <li>Open to all genders &mdash; no prior Scouting experience needed.</li>
+        <li>Parents and other adults 21+ are welcome to register as Advisors.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="panel" id="contact">
+    <div class="section-head">
+      <div class="eyebrow">Reach Us</div>
+      <h2>Say Hello</h2>
+      <p>Questions about joining, trips, or partnering with the crew &mdash; here's how to find us.</p>
+    </div>
+    <div class="contact-grid">
+      <ul class="info-list">
+        <li>
+          <div class="info-icon">@</div>
+          <div class="itext"><strong>Email</strong><a href="mailto:crew2140@example.org">crew2140@example.org</a></div>
+        </li>
+        <li>
+          <div class="info-icon">☎</div>
+          <div class="itext"><strong>Crew Advisor</strong><span>(555) 214-0140</span></div>
+        </li>
+        <li>
+          <div class="info-icon">⌂</div>
+          <div class="itext"><strong>Meets At</strong><span>Community Hall, 214 Trailhead Rd &middot; 1st &amp; 3rd Tuesdays, 7:00&ndash;8:30 PM</span></div>
+        </li>
+        <li>
+          <div class="info-icon">✎</div>
+          <div class="itext"><strong>Chartering Organization</strong><span>[Your sponsoring organization name here]</span></div>
+        </li>
+      </ul>
+
+      <form class="contact-form" onsubmit="handleContact(event)">
+        <div class="field">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" type="text" required placeholder="Your full name">
+        </div>
+        <div class="field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" type="email" required placeholder="you@example.com">
+        </div>
+        <div class="field">
+          <label for="cf-age">Age</label>
+          <input id="cf-age" type="number" min="10" max="99" placeholder="14">
+        </div>
+        <div class="field">
+          <label for="cf-msg">Message</label>
+          <textarea id="cf-msg" placeholder="I'd like to join / learn more about..."></textarea>
+        </div>
+        <p class="form-note">This opens your email client with your message pre-filled &mdash; nothing is sent automatically from this page.</p>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fwrap">
+    <p>VENTURE CREW 2140 &middot; CHARTERED BY [SPONSORING ORGANIZATION]</p>
+    <div class="social">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#" onclick="showPanel('contact');return false;">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* =========================================================
+     GOOGLE CALENDAR SYNC
+     -----------------------------------------------------------
+     1. Make your Google Calendar public:
+        Google Calendar > Settings > [your calendar] >
+        "Access permissions" > check "Make available to public"
+        (Settings for that calendar, "See all event details").
+
+     2. Get the Calendar ID:
+        Same settings page > "Integrate calendar" > Calendar ID
+        looks like: abc123xyz@group.calendar.google.com
+
+     3. Get a free API key:
+        console.cloud.google.com > create/select a project >
+        "APIs & Services" > Library > enable "Google Calendar API" >
+        Credentials > Create Credentials > API key.
+        Then click the key > "Restrict key":
+          - API restrictions: Google Calendar API only
+          - Application restrictions: HTTP referrers, add your site's
+            domain (e.g. https://yourcrewsite.org/*) so nobody else
+            can use your key.
+
+     4. Paste both values below. That's it — events you add on the
+        Google Calendar will show up here automatically the next
+        time someone loads the page. No rebuild, no re-upload.
+     ========================================================= */
+  const GOOGLE_CALENDAR_ID = "https://calendar.google.com/calendar/u/2?cid=dnBjb21zMTQwQGdtYWlsLmNvbQ";
+  const GOOGLE_API_KEY = "AIzaSyDXXYNGPV262r4zL6Sq808nI_E5OuMJq5M";
+  const MAX_EVENTS = 8; // how many upcoming events to show
+
+  function tagForEvent(title, description){
+    const text = (title + " " + (description||"")).toLowerCase();
+    if(text.includes("meeting") || text.includes("election")) return "MEETING";
+    if(text.includes("open house") || text.includes("new member")) return "OPEN HOUSE";
+    if(text.includes("trip") || text.includes("camp") || text.includes("climb") ||
+       text.includes("raft") || text.includes("kayak") || text.includes("hike") ||
+       text.includes("backpack")) return "TRIP";
+    return "EVENT";
+  }
+
+  function formatEventDate(ev){
+    const startRaw = ev.start.dateTime || ev.start.date;
+    const endRaw = ev.end && (ev.end.dateTime || ev.end.date);
+    const allDay = !ev.start.dateTime;
+    const start = new Date(startRaw);
+    const opts = { month:'short', day:'numeric' };
+    let label = start.toLocaleDateString('en-US', opts).toUpperCase();
+    if(!allDay){
+      label += " &middot; " + start.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'});
+    } else if(endRaw){
+      // all-day events: Google's end date is exclusive, so subtract a day for display
+      const end = new Date(endRaw);
+      end.setDate(end.getDate()-1);
+      if(end.getTime() !== start.getTime()){
+        label += "&ndash;" + end.toLocaleDateString('en-US', {day:'numeric'});
+      }
+    }
+    return label;
+  }
+
+  function renderStatus(kind, message){
+    const el = document.getElementById('cal-status');
+    el.className = 'cal-status show ' + kind;
+    el.textContent = message;
+  }
+
+  function renderEvents(events){
+    const timeline = document.getElementById('cal-timeline');
+    const subhead = document.getElementById('cal-subhead');
+    if(!events.length){
+      renderStatus('error', 'Connected, but no upcoming events found on this calendar yet.');
+      return;
+    }
+    timeline.innerHTML = events.map(ev => {
+      const title = ev.summary || "Untitled Event";
+      const desc = ev.description ? ev.description.replace(/<[^>]*>/g,'').slice(0,160) : '';
+      const tag = tagForEvent(title, ev.description);
+      const location = ev.location ? ` &mdash; ${ev.location}` : '';
+      return `
+        <div class="tl-item">
+          <div class="tl-date">${formatEventDate(ev)}</div>
+          <h3>${title}</h3>
+          <p>${desc}${desc && location ? '' : ''}${location}</p>
+          <span class="tl-tag">${tag}</span>
+        </div>`;
+    }).join('');
+    subhead.textContent = "Live from our Google Calendar \u2014 updates automatically.";
+  }
+
+  async function loadGoogleCalendar(){
+    if(GOOGLE_CALENDAR_ID.startsWith("YOUR_") || GOOGLE_API_KEY.startsWith("YOUR_")){
+      // Not configured yet — keep the sample events in the HTML, just note it.
+      renderStatus('', 'Showing sample events. Add your Google Calendar ID and API key in the script to go live.');
+      return;
+    }
+    renderStatus('', 'Loading events from Google Calendar\u2026');
+    try{
+      const timeMin = new Date().toISOString();
+      const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(GOOGLE_CALENDAR_ID)}/events` +
+                  `?key=${GOOGLE_API_KEY}&singleEvents=true&orderBy=startTime&timeMin=${timeMin}&maxResults=${MAX_EVENTS}`;
+      const res = await fetch(url);
+      if(!res.ok){
+        const err = await res.json().catch(()=>({}));
+        throw new Error(err.error && err.error.message ? err.error.message : `Request failed (${res.status})`);
+      }
+      const data = await res.json();
+      renderEvents(data.items || []);
+      document.getElementById('cal-status').classList.remove('show');
+    }catch(err){
+      renderStatus('error', 'Could not load Google Calendar (' + err.message + '). Showing sample events instead.');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadGoogleCalendar);
+
+  function showPanel(id){
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.panel === id));
+    document.querySelector('nav.tabs').classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  function handleContact(e){
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value;
+    const email = document.getElementById('cf-email').value;
+    const age = document.getElementById('cf-age').value;
+    const msg = document.getElementById('cf-msg').value;
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nAge: ${age}\n\n${msg}`);
+    window.location.href = `mailto:crew2140@example.org?subject=Crew%202140%20Contact&body=${body}`;
+  }
+</script>
+</body>
+</html>
