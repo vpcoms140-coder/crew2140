@@ -287,6 +287,42 @@
     100%{opacity:0; transform:translate(6px,-90px) scale(1.6);}
   }
 
+  /* ===== EASTER EGG: ARCHER SUN ===== */
+  #sun-target{ cursor:pointer; }
+  #sun-target:hover{ filter:brightness(1.12); }
+  #arrow-group{
+    opacity:0;
+    transform:translate(-260px,230px) rotate(58deg) scale(0.6);
+    transform-origin:325px 96px;
+    transform-box:view-box;
+  }
+  #arrow-group.shoot{
+    animation:arrowShoot 0.85s cubic-bezier(.2,.9,.25,1.4) forwards;
+  }
+  #arrow-group.shoot-instant{
+    animation:none; opacity:1; transform:translate(0,0) rotate(0deg) scale(1);
+  }
+  @keyframes arrowShoot{
+    0%{ opacity:0; transform:translate(-260px,230px) rotate(58deg) scale(0.6); }
+    10%{ opacity:1; }
+    55%{ transform:translate(0,0) rotate(-9deg) scale(1); }
+    68%{ transform:translate(0,0) rotate(6deg) scale(1); }
+    78%{ transform:translate(0,0) rotate(-4deg) scale(1); }
+    88%{ transform:translate(0,0) rotate(2deg) scale(1); }
+    96%{ transform:translate(0,0) rotate(-1deg) scale(1); }
+    100%{ opacity:1; transform:translate(0,0) rotate(0deg) scale(1); }
+  }
+  #impact-spark{ opacity:0; transform-origin:325px 96px; transform-box:view-box; }
+  #impact-spark.pop{
+    animation:impactPop 0.5s ease-out forwards;
+    animation-delay:0.45s;
+  }
+  @keyframes impactPop{
+    0%{ opacity:0; transform:scale(0.3); }
+    35%{ opacity:1; transform:scale(1.15); }
+    100%{ opacity:0; transform:scale(1.6); }
+  }
+
   /* ===== ONE-TIME FISH JUMP (plays once on load) ===== */
   #fish-jump-overlay{
     position:fixed; left:0; top:14%; width:100%; height:120px; z-index:60;
@@ -383,7 +419,20 @@
           <polygon points="180,300 260,180 340,300" fill="#324a3b" stroke="#c9a55c" stroke-width="1.5"/>
           <polygon points="130,220 150,190 170,220" fill="#efe8d8" opacity="0.9"/>
           <polygon points="230,210 250,180 270,210" fill="#efe8d8" opacity="0.9"/>
-          <circle class="sun-glow" cx="330" cy="90" r="34" fill="#c9a55c" opacity="0.85"/>
+          <circle class="sun-glow" id="sun-target" cx="330" cy="90" r="34" fill="#c9a55c" opacity="0.85" onclick="shootArrow()"/>
+          <g id="arrow-group">
+            <line x1="325" y1="96" x2="372" y2="140" stroke="#5a4130" stroke-width="4" stroke-linecap="round"/>
+            <polygon points="372,140 382,150 388,138 378,132" fill="#5a4130"/>
+            <polygon points="378,132 388,138 382,150 372,140" fill="#7c5a3a"/>
+            <polygon points="313,84 329,90 317,104 310,96" fill="#3a3f3d"/>
+            <polygon points="313,84 329,90 322,80" fill="#5a615e"/>
+          </g>
+          <g id="impact-spark">
+            <line x1="310" y1="80" x2="300" y2="70" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
+            <line x1="316" y1="72" x2="312" y2="58" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
+            <line x1="330" y1="70" x2="332" y2="56" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
+            <line x1="340" y1="80" x2="352" y2="72" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
+          </g>
           <g>
             <polygon points="170,380 190,320 210,380" fill="#b5542a"/>
             <polygon points="180,380 195,335 210,380" fill="#d16a3d"/>
@@ -817,6 +866,22 @@
       observeReveals(); // new event nodes just got injected — hook them into the reveal system too
     }catch(err){
       renderStatus('error', 'Could not load Google Calendar (' + err.message + '). Showing sample events instead.');
+    }
+  }
+
+  /* ===== EASTER EGG: SHOOT THE SUN ===== */
+  let sunStruck = false;
+  function shootArrow(){
+    if(sunStruck) return; // already lodged — ignore further clicks
+    sunStruck = true;
+    const arrow = document.getElementById('arrow-group');
+    const spark = document.getElementById('impact-spark');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced){
+      arrow.classList.add('shoot-instant');
+    } else {
+      arrow.classList.add('shoot');
+      spark.classList.add('pop');
     }
   }
 
