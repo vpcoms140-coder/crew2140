@@ -40,13 +40,20 @@
   a{color:inherit;}
   img,svg{display:block;max-width:100%;}
 
-  /* topo background texture */
+  /* topo background texture — slow ambient drift */
   .topo-bg{
-    position:fixed; inset:0; z-index:-1; opacity:0.5;
+    position:fixed; inset:-10% -10% -10% -10%; z-index:-1; opacity:0.5;
     background:
       repeating-radial-gradient(circle at 20% 30%, transparent 0, transparent 40px, var(--line) 41px, transparent 42px, transparent 90px),
       repeating-radial-gradient(circle at 85% 75%, transparent 0, transparent 55px, var(--line) 56px, transparent 57px, transparent 120px);
     background-color:var(--ridge-black);
+    animation:topoDrift 70s ease-in-out infinite alternate;
+    will-change:transform;
+  }
+  @keyframes topoDrift{
+    0%{transform:translate(0,0) rotate(0deg);}
+    50%{transform:translate(-1.5%,1%) rotate(0.4deg);}
+    100%{transform:translate(1.5%,-1%) rotate(-0.4deg);}
   }
 
   /* ===== NAV — trail signpost ===== */
@@ -71,7 +78,7 @@
   .brand-text .b1{font-family:'Bebas Neue'; font-size:22px; letter-spacing:0.04em;}
   .brand-text .b2{font-family:'JetBrains Mono'; font-size:10px; color:var(--slate); letter-spacing:0.12em; margin-top:2px;}
 
-  nav.tabs{display:flex; gap:2px; flex-wrap:wrap;}
+  nav.tabs{display:flex; gap:2px; flex-wrap:wrap; position:relative;}
   nav.tabs button{
     background:none; border:none; color:var(--parchment-dim);
     font-family:'JetBrains Mono'; font-size:12.5px; letter-spacing:0.06em;
@@ -80,23 +87,31 @@
   }
   nav.tabs button:hover{color:var(--parchment);}
   nav.tabs button.active{color:var(--topo-gold);}
-  nav.tabs button.active::after{
-    content:''; position:absolute; left:14px; right:14px; bottom:2px; height:2px; background:var(--rust);
+  .nav-indicator{
+    position:absolute; bottom:2px; height:2px; background:var(--rust);
+    transition:left 0.35s cubic-bezier(.65,0,.35,1), width 0.35s cubic-bezier(.65,0,.35,1);
+    pointer-events:none;
   }
   .nav-cta{
     background:var(--rust); color:var(--parchment); border:none;
     font-family:'JetBrains Mono'; font-size:12px; letter-spacing:0.05em;
     padding:10px 18px; border-radius:2px; cursor:pointer; white-space:nowrap;
-    transition:background 0.2s;
+    transition:background 0.2s, transform 0.2s;
   }
-  .nav-cta:hover{background:var(--rust-light);}
+  .nav-cta:hover{background:var(--rust-light); transform:translateY(-1px);}
   .burger{display:none; background:none; border:1px solid var(--line); color:var(--parchment); padding:8px 12px; border-radius:2px;}
 
   /* ===== PANELS ===== */
   main{max-width:1180px; margin:0 auto; padding:0 24px;}
-  .panel{display:none; animation:fade 0.4s ease;}
-  .panel.active{display:block;}
-  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+  .panel{display:none;}
+  .panel.active{display:block; animation:panelIn 0.5s cubic-bezier(.22,1,.36,1);}
+  @keyframes panelIn{
+    from{opacity:0; transform:translateY(16px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  /* scroll-reveal: fades/slides elements up as they enter the viewport */
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity 0.6s ease, transform 0.6s cubic-bezier(.22,1,.36,1);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
 
   section{padding:64px 0;}
   section.tight{padding:40px 0;}
@@ -119,16 +134,22 @@
     font-family:'JetBrains Mono'; font-size:13px; letter-spacing:0.05em; text-transform:uppercase;
     cursor:pointer; transition:background .2s; text-decoration:none; display:inline-block;
   }
-  .btn-primary:hover{background:var(--rust-light);}
+  .btn-primary:hover{background:var(--rust-light); transform:translateY(-2px); box-shadow:0 8px 18px rgba(181,84,42,0.35);}
+  .btn-primary{transition:background .2s, transform .2s, box-shadow .2s;}
   .btn-ghost{
     background:none; border:1px solid var(--slate); color:var(--parchment); padding:13px 26px; border-radius:2px;
     font-family:'JetBrains Mono'; font-size:13px; letter-spacing:0.05em; text-transform:uppercase;
-    cursor:pointer; text-decoration:none; display:inline-block; transition:border-color .2s, color .2s;
+    cursor:pointer; text-decoration:none; display:inline-block; transition:border-color .2s, color .2s, transform .2s;
   }
-  .btn-ghost:hover{border-color:var(--topo-gold); color:var(--topo-gold);}
+  .btn-ghost:hover{border-color:var(--topo-gold); color:var(--topo-gold); transform:translateY(-2px);}
 
   .hero-mark{
     background:var(--pine); border:1px solid var(--line); border-radius:6px; padding:20px; box-shadow:var(--shadow);
+    animation:heroFloat 6s ease-in-out infinite;
+  }
+  @keyframes heroFloat{
+    0%, 100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
   }
 
   .stat-row{
@@ -156,10 +177,12 @@
   .card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px;}
   .card{
     background:var(--pine); border:1px solid var(--line); border-radius:6px; overflow:hidden;
-    transition:transform .25s, border-color .25s; display:flex; flex-direction:column;
+    transition:transform .3s cubic-bezier(.22,1,.36,1), border-color .3s, box-shadow .3s; display:flex; flex-direction:column;
   }
-  .card:hover{transform:translateY(-4px); border-color:var(--topo-gold);}
-  .card-art{background:var(--ridge-black); aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; padding:14px;}
+  .card:hover{transform:translateY(-6px); border-color:var(--topo-gold); box-shadow:0 18px 34px rgba(0,0,0,0.35);}
+  .card-art{background:var(--ridge-black); aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; padding:14px; overflow:hidden;}
+  .card-art svg{transition:transform .45s cubic-bezier(.22,1,.36,1);}
+  .card:hover .card-art svg{transform:scale(1.06);}
   .card-body{padding:20px 22px 24px;}
   .card-body h3{font-size:24px; color:var(--parchment); margin:0 0 8px;}
   .card-body p{color:var(--parchment-dim); font-size:14.5px; margin:0;}
@@ -242,11 +265,56 @@
     .burger{display:block;}
     .nav-cta{display:none;}
   }
+  /* ===== HERO SVG AMBIENT MOTION ===== */
+  .sun-glow{
+    transform-origin:330px 90px;
+    animation:sunPulse 4.5s ease-in-out infinite;
+  }
+  @keyframes sunPulse{
+    0%, 100%{opacity:0.75; transform:scale(1);}
+    50%{opacity:0.95; transform:scale(1.07);}
+  }
+  .smoke-puff{
+    opacity:0;
+    animation:smokeRise 4.5s ease-out infinite;
+  }
+  .smoke-puff.s1{animation-delay:0s;}
+  .smoke-puff.s2{animation-delay:1.5s;}
+  .smoke-puff.s3{animation-delay:3s;}
+  @keyframes smokeRise{
+    0%{opacity:0; transform:translate(0,0) scale(0.6);}
+    15%{opacity:0.5;}
+    100%{opacity:0; transform:translate(6px,-90px) scale(1.6);}
+  }
+
+  /* ===== ONE-TIME FISH JUMP (plays once on load) ===== */
+  #fish-jump-overlay{
+    position:fixed; left:0; top:14%; width:100%; height:120px; z-index:60;
+    pointer-events:none; overflow:visible;
+  }
+  #fish-jump-overlay svg{
+    position:absolute; width:86px; height:auto;
+    animation:fishArc 2.6s cubic-bezier(.33,0,.2,1) 0.6s 1 both;
+  }
+  @keyframes fishArc{
+    0%{ left:-10%; top:70px; transform:rotate(8deg) scaleX(1); opacity:0; }
+    8%{ opacity:1; }
+    45%{ left:45%; top:-40px; transform:rotate(-18deg) scaleX(1); }
+    55%{ transform:rotate(-14deg) scaleX(-1); }
+    92%{ opacity:1; }
+    100%{ left:104%; top:80px; transform:rotate(20deg) scaleX(-1); opacity:0; }
+  }
+
   :focus-visible{outline:2px solid var(--topo-gold); outline-offset:2px;}
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    .panel{animation:none;}
+    .panel.active{animation:none;}
     .card{transition:none;}
+    .reveal{opacity:1; transform:none; transition:none;}
+    .topo-bg, .hero-mark, .sun-glow, .smoke-puff, #fish-jump-overlay svg{
+      animation:none !important;
+    }
+    #fish-jump-overlay{display:none;}
   }
 </style>
 </head>
@@ -270,10 +338,21 @@
       <button data-panel="events" onclick="showPanel('events')">Events</button>
       <button data-panel="join" onclick="showPanel('join')">Join</button>
       <button data-panel="contact" onclick="showPanel('contact')">Contact</button>
+      <span class="nav-indicator" id="nav-indicator"></span>
     </nav>
     <button class="nav-cta" onclick="showPanel('join')">Sign Up</button>
   </div>
 </header>
+
+<!-- Plays once on page load: a fish arcing across the top of the screen -->
+<div id="fish-jump-overlay" aria-hidden="true">
+  <svg viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 30 Q 35 5 65 18 Q 90 26 110 20 Q 92 32 90 32 Q 92 34 110 44 Q 90 40 65 46 Q 35 58 10 30 Z" fill="#7e97a1"/>
+    <path d="M10 30 Q 20 20 28 30 Q 20 40 10 30 Z" fill="#c9a55c"/>
+    <circle cx="20" cy="27" r="2" fill="#171d1b"/>
+    <path d="M60 20 Q 65 10 72 16 Q 68 20 60 20 Z" fill="#c9a55c" opacity="0.9"/>
+  </svg>
+</div>
 
 <main>
 
@@ -304,12 +383,15 @@
           <polygon points="180,300 260,180 340,300" fill="#324a3b" stroke="#c9a55c" stroke-width="1.5"/>
           <polygon points="130,220 150,190 170,220" fill="#efe8d8" opacity="0.9"/>
           <polygon points="230,210 250,180 270,210" fill="#efe8d8" opacity="0.9"/>
-          <circle cx="330" cy="90" r="34" fill="#c9a55c" opacity="0.85"/>
+          <circle class="sun-glow" cx="330" cy="90" r="34" fill="#c9a55c" opacity="0.85"/>
           <g>
             <polygon points="170,380 190,320 210,380" fill="#b5542a"/>
             <polygon points="180,380 195,335 210,380" fill="#d16a3d"/>
             <line x1="150" y1="380" x2="230" y2="380" stroke="#efe8d8" stroke-width="3"/>
           </g>
+          <circle class="smoke-puff s1" cx="190" cy="308" r="6" fill="#e2d9c3"/>
+          <circle class="smoke-puff s2" cx="190" cy="308" r="6" fill="#e2d9c3"/>
+          <circle class="smoke-puff s3" cx="190" cy="308" r="6" fill="#e2d9c3"/>
           <circle cx="120" cy="370" r="10" fill="#efe8d8"/>
           <rect x="110" y="382" width="20" height="26" fill="#7e97a1"/>
           <line x1="95" y1="392" x2="145" y2="392" stroke="#efe8d8" stroke-width="3" stroke-linecap="round"/>
@@ -343,19 +425,19 @@
         </svg>
       </div>
       <ul class="value-list">
-        <li>
+        <li class="reveal">
           <div class="vlabel">STRUCTURE</div>
           <div class="vtext"><strong>Youth Officers</strong><span>President, VP of Program, VP of Administration, Guide, and committee chairs elected each year by the crew.</span></div>
         </li>
-        <li>
+        <li class="reveal">
           <div class="vlabel">SUPPORT</div>
           <div class="vtext"><strong>Adult Advisors</strong><span>Certified in Youth Protection Training and outdoor safety, present on every trip, quiet in every meeting.</span></div>
         </li>
-        <li>
+        <li class="reveal">
           <div class="vlabel">STANDARD</div>
           <div class="vtext"><strong>Safety First</strong><span>Every high adventure trip follows BSA's Guide to Safe Scouting and Tour &amp; Activity Plans, no exceptions.</span></div>
         </li>
-        <li>
+        <li class="reveal">
           <div class="vlabel">OPEN TO</div>
           <div class="vtext"><strong>Everyone 14&ndash;20</strong><span>Co-ed, no Scouting background required &mdash; just a willingness to carry your own pack.</span></div>
         </li>
@@ -372,7 +454,7 @@
     </div>
     <div class="card-grid">
 
-      <div class="card">
+      <div class="card reveal">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -389,7 +471,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -406,7 +488,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -423,7 +505,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -439,7 +521,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -456,7 +538,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card reveal">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -486,31 +568,31 @@
       <!-- Populated by loadGoogleCalendar() in the script below.
            If GOOGLE_CALENDAR_ID / GOOGLE_API_KEY aren't set, these sample
            events are shown instead so the page never looks empty. -->
-      <div class="tl-item">
+      <div class="tl-item reveal">
         <div class="tl-date">AUG 4 &middot; 7:00 PM</div>
         <h3>Crew Meeting &mdash; Trip Vote</h3>
         <p>Regular meeting at St. Luke's basement. We're voting on the fall backpacking route.</p>
         <span class="tl-tag">MEETING</span>
       </div>
-      <div class="tl-item">
+      <div class="tl-item reveal">
         <div class="tl-date">AUG 16&ndash;18</div>
         <h3>Fall Backpacking Trip</h3>
         <p>Three-day shakedown hike to test gear and crews ahead of the bigger autumn trek.</p>
         <span class="tl-tag">TRIP</span>
       </div>
-      <div class="tl-item">
+      <div class="tl-item reveal">
         <div class="tl-date">SEP 1 &middot; 7:00 PM</div>
         <h3>New Member Night</h3>
         <p>Open house for anyone curious about Venturing &mdash; no commitment, just come hear how it works.</p>
         <span class="tl-tag">OPEN HOUSE</span>
       </div>
-      <div class="tl-item">
+      <div class="tl-item reveal">
         <div class="tl-date">SEP 22 &middot; 8:00 AM</div>
         <h3>Whitewater Day Trip</h3>
         <p>Guided river run with a local outfitter, swim check required the week before.</p>
         <span class="tl-tag">TRIP</span>
       </div>
-      <div class="tl-item">
+      <div class="tl-item reveal">
         <div class="tl-date">OCT 6 &middot; 7:00 PM</div>
         <h3>Officer Elections</h3>
         <p>Crew votes in next term's President, VP of Program, VP of Administration, and Guide.</p>
@@ -527,19 +609,19 @@
       <p>It's a short path from curious to card-carrying crew member.</p>
     </div>
     <div class="steps">
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">1</div>
         <div><h3>Reach out</h3><p>Send us a message using the contact form or email below &mdash; tell us your age and what you're hoping to do outdoors.</p></div>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">2</div>
         <div><h3>Visit a meeting</h3><p>Come to a regular meeting or a New Member Night as a guest, no paperwork or payment required for your first visit.</p></div>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">3</div>
         <div><h3>Complete the application</h3><p>Fill out the BSA Youth Application and, if you're a parent joining as an Advisor, the Adult Application plus Youth Protection Training.</p></div>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">4</div>
         <div><h3>Pay dues &amp; gear up</h3><p>Annual registration plus crew dues covers BSA membership and insurance. We'll walk you through what gear you actually need to start.</p></div>
       </div>
@@ -703,7 +785,7 @@
       const tag = tagForEvent(title, ev.description);
       const location = ev.location ? ` &mdash; ${ev.location}` : '';
       return `
-        <div class="tl-item">
+        <div class="tl-item reveal">
           <div class="tl-date">${formatEventDate(ev)}</div>
           <h3>${title}</h3>
           <p>${desc}${desc && location ? '' : ''}${location}</p>
@@ -732,6 +814,7 @@
       const data = await res.json();
       renderEvents(data.items || []);
       document.getElementById('cal-status').classList.remove('show');
+      observeReveals(); // new event nodes just got injected — hook them into the reveal system too
     }catch(err){
       renderStatus('error', 'Could not load Google Calendar (' + err.message + '). Showing sample events instead.');
     }
@@ -739,13 +822,50 @@
 
   document.addEventListener('DOMContentLoaded', loadGoogleCalendar);
 
+  /* ===== SCROLL-REVEAL ===== */
+  const revealObserver = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }) : null;
+
+  function observeReveals(){
+    document.querySelectorAll('.reveal:not(.in-view)').forEach(el => {
+      if(revealObserver){ revealObserver.observe(el); }
+      else { el.classList.add('in-view'); } // no IO support — just show it
+    });
+  }
+
+  /* ===== SLIDING NAV INDICATOR ===== */
+  function moveNavIndicator(id){
+    const btn = document.querySelector(`nav.tabs button[data-panel="${id}"]`);
+    const indicator = document.getElementById('nav-indicator');
+    if(!btn || !indicator) return;
+    indicator.style.left = btn.offsetLeft + 14 + 'px';
+    indicator.style.width = (btn.offsetWidth - 28) + 'px';
+  }
+
   function showPanel(id){
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     document.querySelectorAll('nav.tabs button').forEach(b => b.classList.toggle('active', b.dataset.panel === id));
     document.querySelector('nav.tabs').classList.remove('open');
     window.scrollTo({top:0, behavior:'smooth'});
+    moveNavIndicator(id);
+    observeReveals(); // in case switching panels reveals elements already in view
   }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    observeReveals();
+    moveNavIndicator('home');
+  });
+  window.addEventListener('resize', () => {
+    const active = document.querySelector('nav.tabs button.active');
+    if(active) moveNavIndicator(active.dataset.panel);
+  });
   function handleContact(e){
     e.preventDefault();
     const name = document.getElementById('cf-name').value;
