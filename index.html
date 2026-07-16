@@ -292,8 +292,8 @@
   #sun-target:hover{ filter:brightness(1.12); }
   #arrow-group{
     opacity:0;
-    transform:translate(-260px,230px) rotate(58deg) scale(0.6);
-    transform-origin:325px 96px;
+    transform:translate(-220px,190px) rotate(58deg) scale(0.5);
+    transform-origin:322px 92px;
     transform-box:view-box;
   }
   #arrow-group.shoot{
@@ -303,7 +303,7 @@
     animation:none; opacity:1; transform:translate(0,0) rotate(0deg) scale(1);
   }
   @keyframes arrowShoot{
-    0%{ opacity:0; transform:translate(-260px,230px) rotate(58deg) scale(0.6); }
+    0%{ opacity:0; transform:translate(-220px,190px) rotate(58deg) scale(0.5); }
     10%{ opacity:1; }
     55%{ transform:translate(0,0) rotate(-9deg) scale(1); }
     68%{ transform:translate(0,0) rotate(6deg) scale(1); }
@@ -312,7 +312,7 @@
     96%{ transform:translate(0,0) rotate(-1deg) scale(1); }
     100%{ opacity:1; transform:translate(0,0) rotate(0deg) scale(1); }
   }
-  #impact-spark{ opacity:0; transform-origin:325px 96px; transform-box:view-box; }
+  #impact-spark{ opacity:0; transform-origin:322px 92px; transform-box:view-box; }
   #impact-spark.pop{
     animation:impactPop 0.5s ease-out forwards;
     animation-delay:0.45s;
@@ -420,18 +420,21 @@
           <polygon points="130,220 150,190 170,220" fill="#efe8d8" opacity="0.9"/>
           <polygon points="230,210 250,180 270,210" fill="#efe8d8" opacity="0.9"/>
           <circle class="sun-glow" id="sun-target" cx="330" cy="90" r="34" fill="#c9a55c" opacity="0.85" onclick="shootArrow()"/>
-          <g id="arrow-group">
-            <line x1="325" y1="96" x2="372" y2="140" stroke="#5a4130" stroke-width="4" stroke-linecap="round"/>
-            <polygon points="372,140 382,150 388,138 378,132" fill="#5a4130"/>
-            <polygon points="378,132 388,138 382,150 372,140" fill="#7c5a3a"/>
-            <polygon points="313,84 329,90 317,104 310,96" fill="#3a3f3d"/>
-            <polygon points="313,84 329,90 322,80" fill="#5a615e"/>
+          <g id="arrow-group" shape-rendering="crispEdges">
+            <rect x="321" y="91" width="3" height="3" fill="#2f2f2f"/>
+            <rect x="323.4" y="93.4" width="3" height="3" fill="#4d4d4d"/>
+            <rect x="325.8" y="95.8" width="3" height="3" fill="#8a5a34"/>
+            <rect x="328.2" y="98.2" width="3" height="3" fill="#95633c"/>
+            <rect x="330.6" y="100.6" width="3" height="3" fill="#8a5a34"/>
+            <rect x="333" y="103" width="3" height="3" fill="#dcd7cc"/>
+            <rect x="333.6" y="99.4" width="2.6" height="2.6" fill="#cfc9bb"/>
+            <rect x="331.8" y="105.8" width="2.6" height="2.6" fill="#b6a99b"/>
           </g>
           <g id="impact-spark">
-            <line x1="310" y1="80" x2="300" y2="70" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
-            <line x1="316" y1="72" x2="312" y2="58" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
-            <line x1="330" y1="70" x2="332" y2="56" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
-            <line x1="340" y1="80" x2="352" y2="72" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
+            <line x1="313" y1="86" x2="304" y2="78" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
+            <line x1="318" y1="80" x2="315" y2="68" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
+            <line x1="329" y1="83" x2="331" y2="70" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
+            <line x1="335" y1="90" x2="346" y2="84" stroke="#efe8d8" stroke-width="2" stroke-linecap="round"/>
           </g>
           <g>
             <polygon points="170,380 190,320 210,380" fill="#b5542a"/>
