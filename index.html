@@ -39,7 +39,7 @@
   .mono{font-family:'JetBrains Mono', monospace;}
   a{color:inherit;}
   img,svg{display:block;max-width:100%;}
- 
+
   /* topo background texture */
   .topo-bg{
     position:fixed; inset:0; z-index:-1; opacity:0.5;
@@ -48,7 +48,7 @@
       repeating-radial-gradient(circle at 85% 75%, transparent 0, transparent 55px, var(--line) 56px, transparent 57px, transparent 120px);
     background-color:var(--ridge-black);
   }
- 
+
   /* ===== NAV — trail signpost ===== */
   header{
     position:sticky; top:0; z-index:50;
@@ -70,7 +70,7 @@
   .brand-text{display:flex; flex-direction:column; line-height:1;}
   .brand-text .b1{font-family:'Bebas Neue'; font-size:22px; letter-spacing:0.04em;}
   .brand-text .b2{font-family:'JetBrains Mono'; font-size:10px; color:var(--slate); letter-spacing:0.12em; margin-top:2px;}
- 
+
   nav.tabs{display:flex; gap:2px; flex-wrap:wrap;}
   nav.tabs button{
     background:none; border:none; color:var(--parchment-dim);
@@ -91,13 +91,13 @@
   }
   .nav-cta:hover{background:var(--rust-light);}
   .burger{display:none; background:none; border:1px solid var(--line); color:var(--parchment); padding:8px 12px; border-radius:2px;}
- 
+
   /* ===== PANELS ===== */
   main{max-width:1180px; margin:0 auto; padding:0 24px;}
   .panel{display:none; animation:fade 0.4s ease;}
   .panel.active{display:block;}
   @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
- 
+
   section{padding:64px 0;}
   section.tight{padding:40px 0;}
   .eyebrow{
@@ -105,7 +105,7 @@
     color:var(--rust-light); margin-bottom:14px; display:flex; align-items:center; gap:10px;
   }
   .eyebrow::before{content:''; width:24px; height:1px; background:var(--rust-light);}
- 
+
   /* ===== HERO ===== */
   .hero{
     padding:80px 0 60px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;
@@ -126,11 +126,11 @@
     cursor:pointer; text-decoration:none; display:inline-block; transition:border-color .2s, color .2s;
   }
   .btn-ghost:hover{border-color:var(--topo-gold); color:var(--topo-gold);}
- 
+
   .hero-mark{
     background:var(--pine); border:1px solid var(--line); border-radius:6px; padding:20px; box-shadow:var(--shadow);
   }
- 
+
   .stat-row{
     display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);
     border:1px solid var(--line); border-radius:4px; overflow:hidden; margin-top:56px;
@@ -138,12 +138,12 @@
   .stat{background:var(--ridge-black); padding:24px 20px;}
   .stat .num{font-family:'Bebas Neue'; font-size:44px; color:var(--topo-gold);}
   .stat .label{font-family:'JetBrains Mono'; font-size:11px; color:var(--slate); letter-spacing:0.08em; text-transform:uppercase; margin-top:4px;}
- 
+
   /* ===== GENERIC SECTION HEADS ===== */
   .section-head{max-width:640px; margin-bottom:40px;}
   .section-head h2{font-size:clamp(38px,5vw,58px); color:var(--parchment);}
   .section-head p{color:var(--parchment-dim); font-size:16px;}
- 
+
   /* ===== ABOUT ===== */
   .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start;}
   .value-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:18px;}
@@ -151,7 +151,7 @@
   .value-list .vlabel{font-family:'JetBrains Mono'; font-size:12px; color:var(--rust-light); width:88px; flex-shrink:0; padding-top:3px;}
   .value-list .vtext strong{color:var(--parchment); display:block; margin-bottom:3px; font-size:16px;}
   .value-list .vtext span{color:var(--parchment-dim); font-size:14.5px;}
- 
+
   /* ===== ADVENTURES / CARDS ===== */
   .card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px;}
   .card{
@@ -163,7 +163,7 @@
   .card-body{padding:20px 22px 24px;}
   .card-body h3{font-size:24px; color:var(--parchment); margin:0 0 8px;}
   .card-body p{color:var(--parchment-dim); font-size:14.5px; margin:0;}
- 
+
   /* ===== EVENTS ===== */
   .cal-status{
     font-family:'JetBrains Mono'; font-size:12.5px; color:var(--slate);
@@ -187,7 +187,7 @@
     display:inline-block; margin-top:8px; font-family:'JetBrains Mono'; font-size:10.5px;
     color:var(--ridge-black); background:var(--slate); padding:3px 8px; border-radius:2px; letter-spacing:0.05em;
   }
- 
+
   /* ===== JOIN — numbered steps (real sequential process) ===== */
   .steps{display:flex; flex-direction:column; gap:0;}
   .step{display:grid; grid-template-columns:64px 1fr; gap:20px; padding:26px 0; border-bottom:1px solid var(--line);}
@@ -195,14 +195,14 @@
   .step-num{font-family:'Bebas Neue'; font-size:46px; color:var(--pine-light); -webkit-text-stroke:1px var(--topo-gold);}
   .step h3{margin:0 0 6px; font-size:22px; color:var(--parchment);}
   .step p{margin:0; color:var(--parchment-dim); font-size:14.5px; max-width:60ch;}
- 
+
   .req-box{
     background:var(--pine); border:1px solid var(--line); border-radius:6px; padding:26px 28px; margin-top:40px;
   }
   .req-box h3{margin:0 0 14px; font-size:22px; color:var(--topo-gold);}
   .req-box ul{margin:0; padding-left:20px; color:var(--parchment-dim); font-size:14.5px;}
   .req-box li{margin-bottom:8px;}
- 
+
   /* ===== CONTACT ===== */
   .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
   .info-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:20px;}
@@ -214,7 +214,7 @@
   .info-list .itext strong{display:block; color:var(--parchment); font-size:15px;}
   .info-list .itext span, .info-list .itext a{color:var(--parchment-dim); font-size:14.5px; text-decoration:none;}
   .info-list .itext a:hover{color:var(--topo-gold);}
- 
+
   form.contact-form{display:flex; flex-direction:column; gap:16px;}
   .field{display:flex; flex-direction:column; gap:6px;}
   .field label{font-family:'JetBrains Mono'; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--slate);}
@@ -226,14 +226,14 @@
   .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--topo-gold);}
   .field textarea{resize:vertical; min-height:100px;}
   .form-note{font-size:13px; color:var(--slate); margin-top:-4px;}
- 
+
   footer{border-top:1px solid var(--line); padding:32px 24px; text-align:center;}
   footer .fwrap{max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; align-items:center;}
   footer p{margin:0; color:var(--slate); font-size:13px; font-family:'JetBrains Mono';}
   .social{display:flex; gap:16px;}
   .social a{color:var(--parchment-dim); text-decoration:none; font-size:13px; font-family:'JetBrains Mono';}
   .social a:hover{color:var(--topo-gold);}
- 
+
   @media (max-width:860px){
     .hero{grid-template-columns:1fr; padding-top:40px;}
     .about-grid, .contact-grid{grid-template-columns:1fr;}
@@ -252,7 +252,7 @@
 </head>
 <body>
 <div class="topo-bg"></div>
- 
+
 <header>
   <div class="nav-wrap">
     <a href="#" class="brand" onclick="showPanel('home');return false;">
@@ -274,9 +274,9 @@
     <button class="nav-cta" onclick="showPanel('join')">Sign Up</button>
   </div>
 </header>
- 
+
 <main>
- 
+
   <!-- ============ HOME ============ -->
   <section class="panel active" id="home">
     <div class="hero">
@@ -317,7 +317,7 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ============ ABOUT ============ -->
   <section class="panel" id="about">
     <div class="section-head">
@@ -362,7 +362,7 @@
       </ul>
     </div>
   </section>
- 
+
   <!-- ============ ADVENTURES ============ -->
   <section class="panel" id="adventures">
     <div class="section-head">
@@ -371,7 +371,7 @@
       <p>A sample of the program &mdash; the exact lineup shifts every year based on what the crew votes for.</p>
     </div>
     <div class="card-grid">
- 
+
       <div class="card">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
@@ -388,7 +388,7 @@
           <p>Multi-day treks on regional trail systems &mdash; trip planning, food-pack prep, and Leave No Trace practice built in.</p>
         </div>
       </div>
- 
+
       <div class="card">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
@@ -405,7 +405,7 @@
           <p>Guided river days that build toward crew-led paddling once everyone's checked off swim and safety skills.</p>
         </div>
       </div>
- 
+
       <div class="card">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
@@ -422,7 +422,7 @@
           <p>Top-rope days at a local crag or gym, run by climb-certified youth instructors and Advisors.</p>
         </div>
       </div>
- 
+
       <div class="card">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
@@ -438,7 +438,7 @@
           <p>Cold-weather shelter building and layering clinics, capped by an overnight snow camp for those who are ready.</p>
         </div>
       </div>
- 
+
       <div class="card">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
@@ -455,7 +455,7 @@
           <p>Crew fundraises toward a flagship trip &mdash; Philmont, Sea Base, or Northern Tier &mdash; every two to three years.</p>
         </div>
       </div>
- 
+
       <div class="card">
         <div class="card-art">
           <svg viewBox="0 0 200 130" width="100%">
@@ -470,10 +470,10 @@
           <p>Officer training, the Venturing award trail, and mentorship for anyone chasing the Summit Award.</p>
         </div>
       </div>
- 
+
     </div>
   </section>
- 
+
   <!-- ============ EVENTS ============ -->
   <section class="panel" id="events">
     <div class="section-head">
@@ -489,7 +489,7 @@
       <div class="tl-item">
         <div class="tl-date">AUG 4 &middot; 7:00 PM</div>
         <h3>Crew Meeting &mdash; Trip Vote</h3>
-        <p>Regular meeting at the chartering org's hall. We're voting on the fall backpacking route.</p>
+        <p>Regular meeting at St. Luke's basement. We're voting on the fall backpacking route.</p>
         <span class="tl-tag">MEETING</span>
       </div>
       <div class="tl-item">
@@ -518,7 +518,7 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ============ JOIN ============ -->
   <section class="panel" id="join">
     <div class="section-head">
@@ -544,7 +544,7 @@
         <div><h3>Pay dues &amp; gear up</h3><p>Annual registration plus crew dues covers BSA membership and insurance. We'll walk you through what gear you actually need to start.</p></div>
       </div>
     </div>
- 
+
     <div class="req-box">
       <h3>Eligibility</h3>
       <ul>
@@ -554,7 +554,7 @@
       </ul>
     </div>
   </section>
- 
+
   <!-- ============ CONTACT ============ -->
   <section class="panel" id="contact">
     <div class="section-head">
@@ -578,10 +578,10 @@
         </li>
         <li>
           <div class="info-icon">✎</div>
-          <div class="itext"><strong>Chartering Organization</strong><span>[Your sponsoring organization name here]</span></div>
+          <div class="itext"><strong>Chartering Organization</strong><span>St. Luke's Lutheran Church</span></div>
         </li>
       </ul>
- 
+
       <form class="contact-form" onsubmit="handleContact(event)">
         <div class="field">
           <label for="cf-name">Name</label>
@@ -604,9 +604,9 @@
       </form>
     </div>
   </section>
- 
+
 </main>
- 
+
 <footer>
   <div class="fwrap">
     <p>VENTURE CREW 2140 &middot; CHARTERED BY ST LUKE'S LUTHERAN CHURCH</p>
@@ -658,21 +658,27 @@
     return "EVENT";
   }
 
+  // Always display times in the crew's own timezone, regardless of the
+  // visitor's browser/location. Change this if your crew is elsewhere.
+  const DISPLAY_TIMEZONE = "America/Chicago"; // Middleton, WI — Central Time
+
   function formatEventDate(ev){
     const startRaw = ev.start.dateTime || ev.start.date;
     const endRaw = ev.end && (ev.end.dateTime || ev.end.date);
     const allDay = !ev.start.dateTime;
     const start = new Date(startRaw);
-    const opts = { month:'short', day:'numeric' };
+    const opts = { month:'short', day:'numeric', timeZone: DISPLAY_TIMEZONE };
     let label = start.toLocaleDateString('en-US', opts).toUpperCase();
     if(!allDay){
-      label += " &middot; " + start.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'});
+      label += " &middot; " + start.toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit', timeZone: DISPLAY_TIMEZONE});
+      label += " " + new Intl.DateTimeFormat('en-US', {timeZoneName:'short', timeZone: DISPLAY_TIMEZONE})
+                        .formatToParts(start).find(p => p.type === 'timeZoneName').value;
     } else if(endRaw){
       // all-day events: Google's end date is exclusive, so subtract a day for display
       const end = new Date(endRaw);
       end.setDate(end.getDate()-1);
       if(end.getTime() !== start.getTime()){
-        label += "&ndash;" + end.toLocaleDateString('en-US', {day:'numeric'});
+        label += "&ndash;" + end.toLocaleDateString('en-US', {day:'numeric', timeZone: DISPLAY_TIMEZONE});
       }
     }
     return label;
