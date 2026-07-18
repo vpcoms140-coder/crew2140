@@ -197,12 +197,17 @@
   .card-art{background:var(--ridge-black); aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; padding:14px; overflow:hidden; position:relative;}
   .card-art svg{transition:transform .45s cubic-bezier(.22,1,.36,1);}
   .card:hover .card-art svg{transform:scale(1.06);}
+  .card-thumb-img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  transition:transform .45s cubic-bezier(.22,1,.36,1); z-index:1;
+}
+.card:hover .card-thumb-img{transform:scale(1.06);}
   .view-photos-tag{
-    position:absolute; right:10px; bottom:10px; background:rgba(23,29,27,0.85); border:1px solid var(--topo-gold);
-    color:var(--topo-gold); font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase;
-    padding:5px 10px; border-radius:2px; opacity:0; transform:translateY(6px);
-    transition:opacity .25s ease, transform .25s ease; pointer-events:none;
-  }
+  position:absolute; right:10px; bottom:10px; background:rgba(23,29,27,0.85); border:1px solid var(--topo-gold);
+  color:var(--topo-gold); font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase;
+  padding:5px 10px; border-radius:2px; opacity:0; transform:translateY(6px); z-index:2;
+  transition:opacity .25s ease, transform .25s ease; pointer-events:none;
+}
   .card:hover .view-photos-tag, .card:focus-visible .view-photos-tag{opacity:1; transform:translateY(0);}
   .card-body{padding:20px 22px 24px;}
   .card-body h3{font-size:24px; color:var(--parchment); margin:0 0 8px;}
@@ -536,7 +541,7 @@
     </div>
     <div class="card-grid">
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from the Boundry Waters" onclick="openGallery('backpacking')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('backpacking')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from the Boundry Waters" onclick="openGallery('backpacking')"  data-slug="2.heic" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('backpacking')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -553,7 +558,7 @@
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from whitewater" onclick="openGallery('whitewater')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('whitewater')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from whitewater" onclick="openGallery('whitewater')"  data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('whitewater')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -570,7 +575,7 @@
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from climbing" onclick="openGallery('climbing')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('climbing')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from climbing" onclick="openGallery('climbing')"   data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('climbing')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -587,7 +592,7 @@
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from winter camping" onclick="openGallery('winter-camping')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('winter-camping')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from winter camping" onclick="openGallery('winter-camping')"  data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('winter-camping')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -603,7 +608,7 @@
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from high adventure" onclick="openGallery('high-adventure')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('high-adventure')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from high adventure" onclick="openGallery('high-adventure')"  data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('high-adventure')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -620,7 +625,7 @@
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from leadership" onclick="openGallery('leadership')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('leadership')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from leadership" onclick="openGallery('leadership')"  data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('leadership')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -1057,7 +1062,25 @@
       spark.classList.add('pop');
     }
   }
-
+/* Swap in a real photo for any card whose GALLERY_DATA entry has a
+   "thumbnail" set — falls back silently to the existing illustration
+   if the field is missing or the image fails to load. */
+function applyCardThumbnails(){
+  document.querySelectorAll('.card[data-slug]').forEach(card => {
+    const slug = card.getAttribute('data-slug');
+    const data = GALLERY_DATA[slug];
+    if(!data || !data.thumbnail) return;
+    const art = card.querySelector('.card-art');
+    if(!art || art.querySelector('.card-thumb-img')) return; // already applied
+    const img = document.createElement('img');
+    img.src = data.thumbnail;
+    img.alt = data.title;
+    img.className = 'card-thumb-img';
+    img.loading = 'lazy';
+    img.onerror = () => img.remove(); // keep the illustration if the photo 404s
+    art.insertBefore(img, art.firstChild);
+  });
+}
   document.addEventListener('DOMContentLoaded', loadGoogleCalendar);
 
   /* ===== SCROLL-REVEAL ===== */
