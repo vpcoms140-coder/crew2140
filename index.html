@@ -191,11 +191,19 @@
   .card{
     background:var(--pine); border:1px solid var(--line); border-radius:6px; overflow:hidden;
     transition:transform .3s cubic-bezier(.22,1,.36,1), border-color .3s, box-shadow .3s; display:flex; flex-direction:column;
+    cursor:pointer;
   }
   .card:hover{transform:translateY(-6px); border-color:var(--topo-gold); box-shadow:0 18px 34px rgba(0,0,0,0.35);}
-  .card-art{background:var(--ridge-black); aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; padding:14px; overflow:hidden;}
+  .card-art{background:var(--ridge-black); aspect-ratio:16/10; display:flex; align-items:center; justify-content:center; padding:14px; overflow:hidden; position:relative;}
   .card-art svg{transition:transform .45s cubic-bezier(.22,1,.36,1);}
   .card:hover .card-art svg{transform:scale(1.06);}
+  .view-photos-tag{
+    position:absolute; right:10px; bottom:10px; background:rgba(23,29,27,0.85); border:1px solid var(--topo-gold);
+    color:var(--topo-gold); font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase;
+    padding:5px 10px; border-radius:2px; opacity:0; transform:translateY(6px);
+    transition:opacity .25s ease, transform .25s ease; pointer-events:none;
+  }
+  .card:hover .view-photos-tag, .card:focus-visible .view-photos-tag{opacity:1; transform:translateY(0);}
   .card-body{padding:20px 22px 24px;}
   .card-body h3{font-size:24px; color:var(--parchment); margin:0 0 8px;}
   .card-body p{color:var(--parchment-dim); font-size:14.5px; margin:0;}
@@ -334,6 +342,44 @@
     0%{ opacity:0; transform:scale(0.3); }
     35%{ opacity:1; transform:scale(1.15); }
     100%{ opacity:0; transform:scale(1.6); }
+  }
+
+  /* ===== ADVENTURE PHOTO GALLERY MODAL ===== */
+  #gallery-overlay{
+    position:fixed; inset:0; background:rgba(10,13,12,0.8); z-index:70;
+    display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  #gallery-overlay.open{ display:flex; animation:galleryFadeIn 0.25s ease; }
+  @keyframes galleryFadeIn{ from{opacity:0;} to{opacity:1;} }
+  .gallery-box{
+    background:var(--pine); border:1px solid var(--line); border-radius:8px;
+    max-width:920px; width:100%; max-height:85vh; overflow-y:auto; padding:30px;
+    position:relative; animation:galleryPop 0.3s cubic-bezier(.22,1,.36,1);
+  }
+  @keyframes galleryPop{ from{opacity:0; transform:scale(0.94) translateY(8px);} to{opacity:1; transform:scale(1) translateY(0);} }
+  .gallery-close{
+    position:absolute; top:18px; right:18px; background:none; border:1px solid var(--line); color:var(--parchment);
+    width:36px; height:36px; border-radius:50%; cursor:pointer; font-size:18px; line-height:1;
+    display:flex; align-items:center; justify-content:center; transition:border-color .2s, color .2s;
+  }
+  .gallery-close:hover{ border-color:var(--topo-gold); color:var(--topo-gold); }
+  .gallery-title{ font-family:'Bebas Neue'; font-size:34px; color:var(--parchment); margin:0 0 2px; padding-right:40px; }
+  .gallery-sub{
+    font-family:'JetBrains Mono'; font-size:11.5px; color:var(--slate); letter-spacing:0.08em;
+    text-transform:uppercase; margin:0 0 22px;
+  }
+  .gallery-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+  .gallery-photo{ aspect-ratio:4/3; border-radius:6px; overflow:hidden; background:var(--ridge-black); position:relative; }
+  .gallery-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery-placeholder{
+    position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center;
+    gap:8px; color:var(--slate); font-family:'JetBrains Mono'; font-size:10.5px; text-align:center; padding:12px;
+    letter-spacing:0.03em;
+  }
+  .gallery-placeholder svg{ width:26px; height:26px; opacity:0.5; }
+  @media (prefers-reduced-motion: reduce){
+    #gallery-overlay.open{ animation:none; }
+    .gallery-box{ animation:none; }
   }
 
   :focus-visible{outline:2px solid var(--topo-gold); outline-offset:2px;}
@@ -490,8 +536,8 @@
     </div>
     <div class="card-grid">
 
-      <div class="card reveal">
-        <div class="card-art">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from backpacking" onclick="openGallery('backpacking')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('backpacking')}">
+        <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
             <polygon points="20,110 60,40 100,110" fill="#324a3b"/>
@@ -507,8 +553,8 @@
         </div>
       </div>
 
-      <div class="card reveal">
-        <div class="card-art">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from whitewater" onclick="openGallery('whitewater')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('whitewater')}">
+        <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
             <path d="M0 90 Q 40 70 80 90 T 160 90 T 200 90 L 200 130 L 0 130 Z" fill="#324a3b"/>
@@ -524,8 +570,8 @@
         </div>
       </div>
 
-      <div class="card reveal">
-        <div class="card-art">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from climbing" onclick="openGallery('climbing')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('climbing')}">
+        <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
             <polygon points="30,120 100,15 170,120" fill="#25382c" stroke="#c9a55c" stroke-width="1.5"/>
@@ -541,8 +587,8 @@
         </div>
       </div>
 
-      <div class="card reveal">
-        <div class="card-art">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from winter camping" onclick="openGallery('winter-camping')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('winter-camping')}">
+        <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
             <polygon points="20,120 60,50 100,120" fill="#efe8d8" opacity="0.9"/>
@@ -557,8 +603,8 @@
         </div>
       </div>
 
-      <div class="card reveal">
-        <div class="card-art">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from high adventure" onclick="openGallery('high-adventure')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('high-adventure')}">
+        <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
             <polygon points="170,110 190,60 210,110" fill="#324a3b"/>
@@ -574,8 +620,8 @@
         </div>
       </div>
 
-      <div class="card reveal">
-        <div class="card-art">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from leadership" onclick="openGallery('leadership')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('leadership')}">
+        <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
             <circle cx="100" cy="60" r="30" fill="#25382c" stroke="#c9a55c" stroke-width="2"/>
@@ -742,6 +788,16 @@
   </div>
 </footer>
 
+<!-- Reusable photo gallery modal — opened by clicking any Adventures card -->
+<div id="gallery-overlay" onclick="if(event.target===this) closeGallery()" aria-hidden="true">
+  <div class="gallery-box" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+    <button class="gallery-close" onclick="closeGallery()" aria-label="Close gallery">&times;</button>
+    <h3 class="gallery-title" id="gallery-title">Activity</h3>
+    <p class="gallery-sub" id="gallery-sub">0 photos</p>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</div>
+
 <script>
   /* =========================================================
      GOOGLE CALENDAR SYNC
@@ -862,6 +918,125 @@
       renderStatus('error', 'Could not load Google Calendar (' + err.message + '). Showing sample events instead.');
     }
   }
+
+  /* =========================================================
+     ADVENTURE PHOTO GALLERIES
+     -----------------------------------------------------------
+     Each key below matches a card's slug (set in its onclick
+     attribute in the HTML). To add photos for an activity:
+
+     1. In your GitHub repo, create a folder like:
+          images/adventures/backpacking/
+        and drop your jpg/png files in there.
+
+     2. List those filenames in the matching "photos" array below.
+        Paths are relative to index.html, so if your images live at
+        images/adventures/backpacking/1.jpg, write it exactly like
+        that (no leading slash).
+
+     Until real photos are added, each tile shows a "Photo coming
+     soon" placeholder automatically — nothing breaks, nothing to
+     configure. To add a brand-new activity later: add a new card
+     in the Adventures section with a unique onclick="openGallery('your-slug')",
+     then add a matching entry here with that same slug.
+     ========================================================= */
+  const GALLERY_DATA = {
+    "backpacking": {
+      title: "Backpacking",
+      photos: [
+        "images/adventures/backpacking/1.jpg",
+        "images/adventures/backpacking/2.jpg",
+        "images/adventures/backpacking/3.jpg"
+      ]
+    },
+    "whitewater": {
+      title: "Whitewater Rafting & Kayaking",
+      photos: [
+        "images/adventures/whitewater/1.jpg",
+        "images/adventures/whitewater/2.jpg",
+        "images/adventures/whitewater/3.jpg"
+      ]
+    },
+    "climbing": {
+      title: "Rock Climbing & Rappelling",
+      photos: [
+        "images/adventures/climbing/1.jpg",
+        "images/adventures/climbing/2.jpg",
+        "images/adventures/climbing/3.jpg"
+      ]
+    },
+    "winter-camping": {
+      title: "Winter Camping",
+      photos: [
+        "images/adventures/winter-camping/1.jpg",
+        "images/adventures/winter-camping/2.jpg",
+        "images/adventures/winter-camping/3.jpg"
+      ]
+    },
+    "high-adventure": {
+      title: "National High Adventure Bases",
+      photos: [
+        "images/adventures/high-adventure/1.jpg",
+        "images/adventures/high-adventure/2.jpg",
+        "images/adventures/high-adventure/3.jpg"
+      ]
+    },
+    "leadership": {
+      title: "Leadership & Awards",
+      photos: [
+        "images/adventures/leadership/1.jpg",
+        "images/adventures/leadership/2.jpg",
+        "images/adventures/leadership/3.jpg"
+      ]
+    }
+  };
+
+  const PLACEHOLDER_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    <rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/>
+    <path d="M21 16l-5-5-4 4-3-3-4 4"/>
+  </svg>`;
+
+  let lastFocusedBeforeGallery = null;
+
+  function openGallery(slug){
+    const data = GALLERY_DATA[slug];
+    if(!data) return;
+    lastFocusedBeforeGallery = document.activeElement;
+
+    document.getElementById('gallery-title').textContent = data.title;
+    document.getElementById('gallery-sub').textContent =
+      data.photos.length + (data.photos.length === 1 ? ' photo' : ' photos');
+
+    const grid = document.getElementById('gallery-grid');
+    grid.innerHTML = data.photos.map(src => `
+      <div class="gallery-photo">
+        <img src="${src}" alt="${data.title}" loading="lazy"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="gallery-placeholder">
+          ${PLACEHOLDER_SVG}
+          Photo coming soon
+        </div>
+      </div>`).join('');
+
+    const overlay = document.getElementById('gallery-overlay');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    overlay.querySelector('.gallery-close').focus();
+  }
+
+  function closeGallery(){
+    const overlay = document.getElementById('gallery-overlay');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if(lastFocusedBeforeGallery){ lastFocusedBeforeGallery.focus(); }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape'){
+      const overlay = document.getElementById('gallery-overlay');
+      if(overlay.classList.contains('open')) closeGallery();
+    }
+  });
 
   /* ===== EASTER EGG: SHOOT THE SUN ===== */
   let sunStruck = false;
