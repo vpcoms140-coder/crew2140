@@ -40,7 +40,6 @@
   a{color:inherit;}
   img,svg{display:block;max-width:100%;}
 
-  /* topo background texture — slow ambient drift */
   .topo-bg{
     position:fixed; inset:-10% -10% -10% -10%; z-index:-1; opacity:0.5;
     background:
@@ -56,7 +55,6 @@
     100%{transform:translate(1.5%,-1%) rotate(-0.4deg);}
   }
 
-  /* ===== NAV — trail signpost ===== */
   header{
     position:sticky; top:0; z-index:50;
     background:linear-gradient(180deg, var(--ridge-black) 80%, transparent);
@@ -101,7 +99,6 @@
   .nav-cta:hover{background:var(--rust-light); transform:translateY(-1px);}
   .burger{display:none; background:none; border:1px solid var(--line); color:var(--parchment); padding:8px 12px; border-radius:2px;}
 
-  /* ===== PANELS ===== */
   main{max-width:1180px; margin:0 auto; padding:0 24px;}
   .panel{display:none;}
   .panel.active{display:block; animation:panelIn 0.5s cubic-bezier(.22,1,.36,1);}
@@ -109,7 +106,6 @@
     from{opacity:0; transform:translateY(16px);}
     to{opacity:1; transform:translateY(0);}
   }
-  /* scroll-reveal: fades/slides elements up as they enter the viewport */
   .reveal{opacity:0; transform:translateY(22px); transition:opacity 0.6s ease, transform 0.6s cubic-bezier(.22,1,.36,1);}
   .reveal.in-view{opacity:1; transform:translateY(0);}
 
@@ -121,7 +117,6 @@
   }
   .eyebrow::before{content:''; width:24px; height:1px; background:var(--rust-light);}
 
-  /* ===== HERO ===== */
   .hero{
     padding:80px 0 60px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center;
   }
@@ -132,10 +127,9 @@
   .btn-primary{
     background:var(--rust); color:var(--parchment); padding:14px 26px; border:none; border-radius:2px;
     font-family:'JetBrains Mono'; font-size:13px; letter-spacing:0.05em; text-transform:uppercase;
-    cursor:pointer; transition:background .2s; text-decoration:none; display:inline-block;
+    cursor:pointer; transition:background .2s, transform .2s, box-shadow .2s; text-decoration:none; display:inline-block;
   }
   .btn-primary:hover{background:var(--rust-light); transform:translateY(-2px); box-shadow:0 8px 18px rgba(181,84,42,0.35);}
-  .btn-primary{transition:background .2s, transform .2s, box-shadow .2s;}
   .btn-ghost{
     background:none; border:1px solid var(--slate); color:var(--parchment); padding:13px 26px; border-radius:2px;
     font-family:'JetBrains Mono'; font-size:13px; letter-spacing:0.05em; text-transform:uppercase;
@@ -173,12 +167,10 @@
   .stat .num{font-family:'Bebas Neue'; font-size:44px; color:var(--topo-gold);}
   .stat .label{font-family:'JetBrains Mono'; font-size:11px; color:var(--slate); letter-spacing:0.08em; text-transform:uppercase; margin-top:4px;}
 
-  /* ===== GENERIC SECTION HEADS ===== */
   .section-head{max-width:640px; margin-bottom:40px;}
   .section-head h2{font-size:clamp(38px,5vw,58px); color:var(--parchment);}
   .section-head p{color:var(--parchment-dim); font-size:16px;}
 
-  /* ===== ABOUT ===== */
   .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start;}
   .value-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:18px;}
   .value-list li{display:flex; gap:16px; align-items:flex-start; border-bottom:1px solid var(--line); padding-bottom:18px;}
@@ -186,7 +178,6 @@
   .value-list .vtext strong{color:var(--parchment); display:block; margin-bottom:3px; font-size:16px;}
   .value-list .vtext span{color:var(--parchment-dim); font-size:14.5px;}
 
-  /* ===== ADVENTURES / CARDS ===== */
   .card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px;}
   .card{
     background:var(--pine); border:1px solid var(--line); border-radius:6px; overflow:hidden;
@@ -198,22 +189,21 @@
   .card-art svg{transition:transform .45s cubic-bezier(.22,1,.36,1);}
   .card:hover .card-art svg{transform:scale(1.06);}
   .card-thumb-img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  transition:transform .45s cubic-bezier(.22,1,.36,1); z-index:1;
-}
-.card:hover .card-thumb-img{transform:scale(1.06);}
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    transition:transform .45s cubic-bezier(.22,1,.36,1); z-index:1;
+  }
+  .card:hover .card-thumb-img{transform:scale(1.06);}
   .view-photos-tag{
-  position:absolute; right:10px; bottom:10px; background:rgba(23,29,27,0.85); border:1px solid var(--topo-gold);
-  color:var(--topo-gold); font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase;
-  padding:5px 10px; border-radius:2px; opacity:0; transform:translateY(6px); z-index:2;
-  transition:opacity .25s ease, transform .25s ease; pointer-events:none;
-}
+    position:absolute; right:10px; bottom:10px; background:rgba(23,29,27,0.85); border:1px solid var(--topo-gold);
+    color:var(--topo-gold); font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.05em; text-transform:uppercase;
+    padding:5px 10px; border-radius:2px; opacity:0; transform:translateY(6px); z-index:2;
+    transition:opacity .25s ease, transform .25s ease; pointer-events:none;
+  }
   .card:hover .view-photos-tag, .card:focus-visible .view-photos-tag{opacity:1; transform:translateY(0);}
   .card-body{padding:20px 22px 24px;}
   .card-body h3{font-size:24px; color:var(--parchment); margin:0 0 8px;}
   .card-body p{color:var(--parchment-dim); font-size:14.5px; margin:0;}
 
-  /* ===== EVENTS ===== */
   .cal-status{
     font-family:'JetBrains Mono'; font-size:12.5px; color:var(--slate);
     display:none; align-items:center; gap:8px; margin-bottom:22px; padding:10px 14px;
@@ -237,7 +227,6 @@
     color:var(--ridge-black); background:var(--slate); padding:3px 8px; border-radius:2px; letter-spacing:0.05em;
   }
 
-  /* ===== JOIN — numbered steps (real sequential process) ===== */
   .steps{display:flex; flex-direction:column; gap:0;}
   .step{display:grid; grid-template-columns:64px 1fr; gap:20px; padding:26px 0; border-bottom:1px solid var(--line);}
   .step:first-child{padding-top:0;}
@@ -252,7 +241,6 @@
   .req-box ul{margin:0; padding-left:20px; color:var(--parchment-dim); font-size:14.5px;}
   .req-box li{margin-bottom:8px;}
 
-  /* ===== CONTACT ===== */
   .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
   .info-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:20px;}
   .info-list li{display:flex; gap:16px;}
@@ -291,7 +279,7 @@
     .burger{display:block;}
     .nav-cta{display:none;}
   }
-  /* ===== HERO SVG AMBIENT MOTION ===== */
+
   .sun-glow{
     transform-origin:330px 90px;
     animation:sunPulse 4.5s ease-in-out infinite;
@@ -313,7 +301,6 @@
     100%{opacity:0; transform:translate(6px,-90px) scale(1.6);}
   }
 
-  /* ===== EASTER EGG: ARCHER SUN ===== */
   #sun-target{ cursor:pointer; }
   #sun-target:hover{ filter:brightness(1.12); }
   #arrow-group{
@@ -349,7 +336,6 @@
     100%{ opacity:0; transform:scale(1.6); }
   }
 
-  /* ===== ADVENTURE PHOTO GALLERY MODAL ===== */
   #gallery-overlay{
     position:fixed; inset:0; background:rgba(10,13,12,0.8); z-index:70;
     display:none; align-items:center; justify-content:center; padding:24px;
@@ -433,14 +419,14 @@
       <div>
         <div class="eyebrow">Venturing · BSA Crew 2140</div>
         <h1>ADVENTURE<br>IS THE<br><span class="accent">CURRICULUM</span></h1>
-        <p class="lead">We're a youth-led crew for young men and women ages 14&ndash;21 who'd rather learn on a summit, a river, or a rock face than in a classroom. Backpacking, climbing, paddling, and a lot of trip-planning spreadsheets.</p>
+        <p class="lead">We're a fully youth-led crew for young men and women ages 14&ndash;21 who'd rather learn on a summit, a river, or a rock face than in a classroom. Backpacking, climbing, paddling, and a lot of trip-planning spreadsheets.</p>
         <div class="hero-buttons">
-          <a href="#" class="btn-primary" onclick="showPanel('join');return false;">Sign Up For A Meeting</a>
+          <a href="#" class="btn-primary" onclick="showPanel('join');return false;">Come To A Meeting</a>
           <a href="#" class="btn-ghost" onclick="showPanel('adventures');return false;">See Our Trips</a>
         </div>
         <div class="stat-row">
           <div class="stat"><div class="num">14&ndash;21</div><div class="label">Age Range</div></div>
-          <div class="stat"><div class="num">6+</div><div class="label">High Adventure Trips / Yr</div></div>
+          <div class="stat"><div class="num">4+</div><div class="label">High Adventure Trips / Yr</div></div>
           <div class="stat"><div class="num">100%</div><div class="label">Youth Led</div></div>
         </div>
       </div>
@@ -491,12 +477,12 @@
   <section class="panel" id="about">
     <div class="section-head">
       <div class="eyebrow">Who We Are</div>
-      <h2>Run By Members, Backed By Adults</h2>
-      <p>Venturing is the Boy Scouts of America's program for older youth, built around high adventure, leadership, and a crew government that members actually run.</p>
+      <h2>Run By Youth, Backed By Adults</h2>
+      <p>Venturing is the Boy Scouts of America's program for older youth, built around high adventure, leadership, and a elected Crew government.</p>
     </div>
     <div class="about-grid">
       <div>
-        <p style="color:var(--parchment-dim); font-size:16px;">Crew 2140 was chartered by our sponsoring organization to give teens a program that treats them like the capable adults they're becoming. Every trip, budget line, and safety plan starts with youth officers &mdash; our adult Advisors coach from the sideline instead of running the show.</p>
+        <p style="color:var(--parchment-dim); font-size:16px;">Crew 2140 was chartered by St. Lukes to give teens a program that puts them truly in charge. Every trip, budget line, and safety plan starts with youth man plans &mdash; our adult Advisors coach from the sideline and make sure nothing goes wrong.</p>
         <p style="color:var(--parchment-dim); font-size:16px;">We meet twice a month during the school year to plan logistics, train on outdoor skills, and vote on where we're headed next. Then we go do it &mdash; rain, shine, or occasional minor snow event.</p>
         <svg style="margin-top:28px;" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
           <rect width="500" height="200" rx="6" fill="#25382c"/>
@@ -514,11 +500,11 @@
       <ul class="value-list">
         <li class="reveal">
           <div class="vlabel">STRUCTURE</div>
-          <div class="vtext"><strong>Youth Officers</strong><span>President, VP of Program, VP of Administration, Guide, and committee chairs elected each year by the crew.</span></div>
+          <div class="vtext"><strong>Youth Officers</strong><span>President, VP of Program, VP of Administration, VP Communications, Treasurer, and Guide, elected every 6 months by the crew.</span></div>
         </li>
         <li class="reveal">
           <div class="vlabel">SUPPORT</div>
-          <div class="vtext"><strong>Adult Advisors</strong><span>Certified in Youth Protection Training and outdoor safety, present on every trip, quiet in every meeting.</span></div>
+          <div class="vtext"><strong>Adult Advisors</strong><span>Certified in Youth Protection Training and outdoor safety, present on every trip, quiet in every meeting. Adult Advisors are only present to ensure nobody gets injured, and we follow the Scouts BSA rules.</span></div>
         </li>
         <li class="reveal">
           <div class="vlabel">STANDARD</div>
@@ -526,7 +512,7 @@
         </li>
         <li class="reveal">
           <div class="vlabel">OPEN TO</div>
-          <div class="vtext"><strong>Everyone 14&ndash;20</strong><span>Co-ed, no Scouting background required &mdash; just a willingness to carry your own pack.</span></div>
+          <div class="vtext"><strong>Everyone 14&ndash;21</strong><span>Co-ed, no Scouting background required &mdash; just a willingness to learn and adapt.</span></div>
         </li>
       </ul>
     </div>
@@ -536,29 +522,12 @@
   <section class="panel" id="adventures">
     <div class="section-head">
       <div class="eyebrow">What We Do</div>
-      <h2>Trips We Actually Run</h2>
+      <h2>Trips We've Done Before</h2>
       <p>A sample of the program &mdash; the exact lineup shifts every year based on what the crew votes for.</p>
     </div>
     <div class="card-grid">
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from the Boundry Waters" onclick="openGallery('backpacking')"  data-slug="backpacking onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('backpacking')}">
-        <div class="card-art"><span class="view-photos-tag">View Photos</span>
-          <svg viewBox="0 0 200 130" width="100%">
-            <rect width="200" height="130" fill="#171d1b"/>
-            <polygon points="20,110 60,40 100,110" fill="#324a3b"/>
-            <polygon points="80,110 130,30 180,110" fill="#25382c" stroke="#c9a55c" stroke-width="1.5"/>
-            <polygon points="70,70 80,55 90,70" fill="#efe8d8"/>
-            <polygon points="120,60 130,45 140,60" fill="#efe8d8"/>
-            <polygon points="60,95 80,65 100,95" fill="#b5542a" opacity="0.9"/>
-          </svg>
-        </div>
-        <div class="card-body">
-          <h3>The Boundry Waters</h3>
-          <p>Multi-day canoe treks on regional trail systems &mdash; trip planning, food-pack prep, and Leave No Trace practice built in.</p>
-        </div>
-      </div>
-
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from whitewater" onclick="openGallery('whitewater')"  data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('whitewater')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from canoeing" onclick="openGallery('canoeing')" data-slug="canoeing" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('canoeing')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -570,29 +539,29 @@
           </svg>
         </div>
         <div class="card-body">
-          <h3>Whitewater Rafting &amp; Kayaking</h3>
-          <p>Guided river days that build toward crew-led paddling once everyone's checked off swim and safety skills.</p>
+          <h3>Canoeing</h3>
+          <p>Multi-day treks in various canoe areas, treks to push you to the limit while expanding your horizons.</p>
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from climbing" onclick="openGallery('climbing')"   data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('climbing')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from backpacking" onclick="openGallery('backpacking-trips')" data-slug="backpacking-trips" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('backpacking-trips')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
-            <polygon points="30,120 100,15 170,120" fill="#25382c" stroke="#c9a55c" stroke-width="1.5"/>
-            <line x1="100" y1="15" x2="70" y2="70" stroke="#efe8d8" stroke-width="1"/>
-            <line x1="100" y1="15" x2="120" y2="80" stroke="#efe8d8" stroke-width="1"/>
-            <line x1="70" y1="70" x2="90" y2="60" stroke="#efe8d8" stroke-width="1"/>
-            <circle cx="112" cy="55" r="5" fill="#d16a3d"/>
+            <polygon points="20,110 60,40 100,110" fill="#324a3b"/>
+            <polygon points="80,110 130,30 180,110" fill="#25382c" stroke="#c9a55c" stroke-width="1.5"/>
+            <polygon points="70,70 80,55 90,70" fill="#efe8d8"/>
+            <polygon points="120,60 130,45 140,60" fill="#efe8d8"/>
+            <polygon points="60,95 80,65 100,95" fill="#b5542a" opacity="0.9"/>
           </svg>
         </div>
         <div class="card-body">
-          <h3>Rock Climbing &amp; Rappelling</h3>
-          <p>Top-rope days at a local crag or gym, run by climb-certified youth instructors and Advisors.</p>
+          <h3>Backpacking</h3>
+          <p>Treks in locations all across the US, from the deserts of New Mexico to the Cliffs of the Pacific Northwest.</p>
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from winter camping" onclick="openGallery('winter-camping')"  data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('winter-camping')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from winter camping" onclick="openGallery('winter-camping')" data-slug="winter-camping" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('winter-camping')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -604,11 +573,30 @@
         </div>
         <div class="card-body">
           <h3>Winter Camping</h3>
-          <p>Cold-weather shelter building and layering clinics, capped by an overnight snow camp for those who are ready.</p>
+          <p>Cold-weather shelter building and layering clinics, capped by an overnight in a Quinzhee!</p>
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from high adventure" onclick="openGallery('high-adventure')"  data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('high-adventure')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from bowling and day activities" onclick="openGallery('day-activities')" data-slug="day-activities" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('day-activities')}">
+        <div class="card-art"><span class="view-photos-tag">View Photos</span>
+          <svg viewBox="0 0 200 130" width="100%">
+            <rect width="200" height="130" fill="#171d1b"/>
+            <path d="M95 20 Q88 20 88 30 Q88 45 82 55 Q75 70 78 85 Q80 100 95 105 Q110 100 112 85 Q115 70 108 55 Q102 45 102 30 Q102 20 95 20 Z" fill="#efe8d8"/>
+            <rect x="82" y="45" width="26" height="6" fill="#b5542a"/>
+            <rect x="80" y="60" width="30" height="6" fill="#b5542a"/>
+            <circle cx="150" cy="95" r="20" fill="#c9a55c"/>
+            <circle cx="144" cy="88" r="2.2" fill="#171d1b"/>
+            <circle cx="152" cy="86" r="2.2" fill="#171d1b"/>
+            <circle cx="148" cy="94" r="2.2" fill="#171d1b"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <h3>Bowling And Day Activities</h3>
+          <p>Tired of school and need a break? We have smaller day activities for you to enjoy! Ranging from bowling to escape rooms, anything is possible.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from high adventure" onclick="openGallery('high-adventure')" data-slug="high-adventure" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('high-adventure')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -621,11 +609,11 @@
         </div>
         <div class="card-body">
           <h3>National High Adventure Bases</h3>
-          <p>Crew fundraises toward a flagship trip &mdash; Philmont, Sea Base, or Northern Tier &mdash; every two to three years.</p>
+          <p>Crew fundraises toward a flagship trip &mdash; Philmont, Sea Base, or Northern Tier &mdash; anytime the crew desires!</p>
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from leadership" onclick="openGallery('leadership')"  data-slug="your-slug-here" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('leadership')}">
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from leadership" onclick="openGallery('leadership')" data-slug="leadership" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('leadership')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
             <rect width="200" height="130" fill="#171d1b"/>
@@ -636,7 +624,7 @@
         </div>
         <div class="card-body">
           <h3>Leadership &amp; Awards</h3>
-          <p>Officer training, the Venturing award trail, and mentorship for anyone chasing the Summit Award.</p>
+          <p>Leadership opportunities galore, with all youth positions being open to people with all levels of experience! Rank advancement to the Summit award is guided, and encouraged, but not required!</p>
         </div>
       </div>
 
@@ -652,9 +640,6 @@
     </div>
     <div id="cal-status" class="cal-status"></div>
     <div class="timeline" id="cal-timeline">
-      <!-- Populated by loadGoogleCalendar() in the script below.
-           If GOOGLE_CALENDAR_ID / GOOGLE_API_KEY aren't set, these sample
-           events are shown instead so the page never looks empty. -->
       <div class="tl-item reveal">
         <div class="tl-date">AUG 4 &middot; 7:00 PM</div>
         <h3>Crew Meeting &mdash; Trip Vote</h3>
@@ -693,7 +678,7 @@
     <div class="section-head">
       <div class="eyebrow">Get Involved</div>
       <h2>How To Join</h2>
-      <p>It's a short path from curious to card-carrying crew member.</p>
+      <p>It's super easy to go from a prospective member, to an excelling leader!</p>
     </div>
     <div class="steps">
       <div class="step reveal">
@@ -710,7 +695,7 @@
           <h3>Complete the application</h3>
           <p>Fill out the BSA Youth Application and, if you're a parent joining as an Advisor, the Adult Application plus Youth Protection Training.</p>
           <a href="https://beascout.scouting.org/list/?zip=53593&program%5B0%5D=crew&miles=10" target="_blank" rel="noopener noreferrer" class="btn-glow" style="margin-top:14px;">
-            Apply on BeAScout
+            Apply on BeAScout.org
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
           </a>
         </div>
@@ -724,9 +709,9 @@
     <div class="req-box">
       <h3>Eligibility</h3>
       <ul>
-        <li>Age 14 (and completed 8th grade) through 20 years old.</li>
+        <li>Age 14 (and completed 8th grade) through 21 years old.</li>
         <li>Open to all genders &mdash; no prior Scouting experience needed.</li>
-        <li>Parents and other adults 21+ are welcome to register as Advisors.</li>
+        <li>Parents and other adults 21+ are welcome and encouraged to register as Advisors.</li>
       </ul>
     </div>
   </section>
@@ -742,15 +727,15 @@
       <ul class="info-list">
         <li>
           <div class="info-icon">@</div>
-          <div class="itext"><strong>Email</strong><a href="mailto:crew2140@example.org">crew2140@example.org</a></div>
+          <div class="itext"><strong>Email</strong><a href="mailto:vpcoms140@gmail.com">vpcoms140@gmail.com</a></div>
         </li>
         <li>
           <div class="info-icon">☎</div>
-          <div class="itext"><strong>Crew Advisor</strong><span>(555) 214-0140</span></div>
+          <div class="itext"><strong>Crew Advisor</strong><span>eegrindle@gmail.com</span></div>
         </li>
         <li>
           <div class="info-icon">⌂</div>
-          <div class="itext"><strong>Meets At</strong><span>Community Hall, 214 Trailhead Rd &middot; 1st &amp; 3rd Tuesdays, 7:00&ndash;8:30 PM</span></div>
+          <div class="itext"><strong>Meets At</strong><span>St. Luke's Lutheran Church, 7337 Hubbard Ave, Middleton, WI, 53562. Meeting days/times change per meeting.</span></div>
         </li>
         <li>
           <div class="info-icon">✎</div>
@@ -804,35 +789,9 @@
 </div>
 
 <script>
-  /* =========================================================
-     GOOGLE CALENDAR SYNC
-     -----------------------------------------------------------
-     1. Make your Google Calendar public:
-        Google Calendar > Settings > [your calendar] >
-        "Access permissions" > check "Make available to public"
-        (Settings for that calendar, "See all event details").
-
-     2. Get the Calendar ID:
-        Same settings page > "Integrate calendar" > Calendar ID
-        looks like: abc123xyz@group.calendar.google.com
-
-     3. Get a free API key:
-        console.cloud.google.com > create/select a project >
-        "APIs & Services" > Library > enable "Google Calendar API" >
-        Credentials > Create Credentials > API key.
-        Then click the key > "Restrict key":
-          - API restrictions: Google Calendar API only
-          - Application restrictions: HTTP referrers, add your site's
-            domain (e.g. https://yourcrewsite.org/*) so nobody else
-            can use your key.
-
-     4. Paste both values below. That's it — events you add on the
-        Google Calendar will show up here automatically the next
-        time someone loads the page. No rebuild, no re-upload.
-     ========================================================= */
   const GOOGLE_CALENDAR_ID = "vpcoms140@gmail.com";
   const GOOGLE_API_KEY = "AIzaSyDXXYNGPV262r4zL6Sq808nI_E5OuMJq5M";
-  const MAX_EVENTS = 8; // how many upcoming events to show
+  const MAX_EVENTS = 8;
 
   function tagForEvent(title, description){
     const text = (title + " " + (description||"")).toLowerCase();
@@ -844,8 +803,6 @@
     return "EVENT";
   }
 
-  // Always display times in the crew's own timezone, regardless of the
-  // visitor's browser/location. Change this if your crew is elsewhere.
   const DISPLAY_TIMEZONE = "America/Chicago"; // Middleton, WI — Central Time
 
   function formatEventDate(ev){
@@ -860,7 +817,6 @@
       label += " " + new Intl.DateTimeFormat('en-US', {timeZoneName:'short', timeZone: DISPLAY_TIMEZONE})
                         .formatToParts(start).find(p => p.type === 'timeZoneName').value;
     } else if(endRaw){
-      // all-day events: Google's end date is exclusive, so subtract a day for display
       const end = new Date(endRaw);
       end.setDate(end.getDate()-1);
       if(end.getTime() !== start.getTime()){
@@ -901,7 +857,6 @@
 
   async function loadGoogleCalendar(){
     if(GOOGLE_CALENDAR_ID.startsWith("YOUR_") || GOOGLE_API_KEY.startsWith("YOUR_")){
-      // Not configured yet — keep the sample events in the HTML, just note it.
       renderStatus('', 'Showing sample events. Add your Google Calendar ID and API key in the script to go live.');
       return;
     }
@@ -918,7 +873,7 @@
       const data = await res.json();
       renderEvents(data.items || []);
       document.getElementById('cal-status').classList.remove('show');
-      observeReveals(); // new event nodes just got injected — hook them into the reveal system too
+      observeReveals();
     }catch(err){
       renderStatus('error', 'Could not load Google Calendar (' + err.message + '). Showing sample events instead.');
     }
@@ -927,75 +882,74 @@
   /* =========================================================
      ADVENTURE PHOTO GALLERIES
      -----------------------------------------------------------
-     Each key below matches a card's slug (set in its onclick
-     attribute in the HTML). To add photos for an activity:
+     Each key below matches a card's slug (its onclick + data-slug
+     in the HTML above). To add or replace photos for an activity:
 
-     1. In your GitHub repo, create a folder like:
-          images/adventures/backpacking/
-        and drop your jpg/png files in there.
-
+     1. In your GitHub repo, create/use a folder like images/<slug>/
+        and drop your .jpg or .png files in there.
      2. List those filenames in the matching "photos" array below.
-        Paths are relative to index.html, so if your images live at
-        images/adventures/backpacking/1.jpg, write it exactly like
-        that (no leading slash).
 
-     Until real photos are added, each tile shows a "Photo coming
-     soon" placeholder automatically — nothing breaks, nothing to
-     configure. To add a brand-new activity later: add a new card
-     in the Adventures section with a unique onclick="openGallery('your-slug')",
-     then add a matching entry here with that same slug.
+     IMPORTANT — file format: browsers (Chrome, Firefox, Edge) do NOT
+     display .heic/.HEIC photos (the default iPhone format). Convert
+     photos to .jpg or .png before uploading, or they'll silently fail
+     to load and fall back to the "Photo coming soon" placeholder.
+
+     Note: the "canoeing" card below reuses the images/backpacking/
+     folder, since that's where the real Boundary Waters photos
+     already live. Rename the folder to images/canoeing/ later if
+     you'd like the names to match — just update the paths here too.
      ========================================================= */
   const GALLERY_DATA = {
-    "backpacking": {
-      title: "The Boundry Waters",
-      thumbnail: "images/backpacking/2.heic",
+    "canoeing": {
+      title: "Canoeing",
+      thumbnail: "images/backpacking/1.jpg",
       photos: [
-        "images/backpacking/1.JPG",
-        "images/backpacking/2.heic",
-        "images/backpacking/3.heic",
-        "images/backpacking/4.HEIC",
-        "images/backpacking/5.HEIC",
-        "images/backpacking/6.HEIC",
+        "images/backpacking/1.jpg",
+        "images/backpacking/2.jpg",
+        "images/backpacking/3.jpg",
+        "images/backpacking/4.jpg",
+        "images/backpacking/5.jpg",
+        "images/backpacking/6.jpg"
       ]
     },
-    "whitewater": {
-      title: "Whitewater Rafting & Kayaking",
+    "backpacking-trips": {
+      title: "Backpacking",
       photos: [
-        "images/adventures/whitewater/1.jpg",
-        "images/adventures/whitewater/2.jpg",
-        "images/adventures/whitewater/3.jpg"
-      ]
-    },
-    "climbing": {
-      title: "Rock Climbing & Rappelling",
-      photos: [
-        "images/adventures/climbing/1.jpg",
-        "images/adventures/climbing/2.jpg",
-        "images/adventures/climbing/3.jpg"
+        "images/backpacking-trips/1.jpg",
+        "images/backpacking-trips/2.jpg",
+        "images/backpacking-trips/3.jpg"
       ]
     },
     "winter-camping": {
       title: "Winter Camping",
       photos: [
-        "images/adventures/winter-camping/1.jpg",
-        "images/adventures/winter-camping/2.jpg",
-        "images/adventures/winter-camping/3.jpg"
+        "images/winter-camping/1.jpg",
+        "images/winter-camping/2.jpg",
+        "images/winter-camping/3.jpg"
+      ]
+    },
+    "day-activities": {
+      title: "Bowling And Day Activities",
+      photos: [
+        "images/day-activities/1.jpg",
+        "images/day-activities/2.jpg",
+        "images/day-activities/3.jpg"
       ]
     },
     "high-adventure": {
       title: "National High Adventure Bases",
       photos: [
-        "images/adventures/high-adventure/1.jpg",
-        "images/adventures/high-adventure/2.jpg",
-        "images/adventures/high-adventure/3.jpg"
+        "images/high-adventure/1.jpg",
+        "images/high-adventure/2.jpg",
+        "images/high-adventure/3.jpg"
       ]
     },
     "leadership": {
       title: "Leadership & Awards",
       photos: [
-        "images/adventures/leadership/1.jpg",
-        "images/adventures/leadership/2.jpg",
-        "images/adventures/leadership/3.jpg"
+        "images/leadership/1.jpg",
+        "images/leadership/2.jpg",
+        "images/leadership/3.jpg"
       ]
     }
   };
@@ -1047,10 +1001,9 @@
     }
   });
 
-  /* ===== EASTER EGG: SHOOT THE SUN ===== */
   let sunStruck = false;
   function shootArrow(){
-    if(sunStruck) return; // already lodged — ignore further clicks
+    if(sunStruck) return;
     sunStruck = true;
     const arrow = document.getElementById('arrow-group');
     const spark = document.getElementById('impact-spark');
@@ -1062,28 +1015,26 @@
       spark.classList.add('pop');
     }
   }
-/* Swap in a real photo for any card whose GALLERY_DATA entry has a
-   "thumbnail" set — falls back silently to the existing illustration
-   if the field is missing or the image fails to load. */
-function applyCardThumbnails(){
-  document.querySelectorAll('.card[data-slug]').forEach(card => {
-    const slug = card.getAttribute('data-slug');
-    const data = GALLERY_DATA[slug];
-    if(!data || !data.thumbnail) return;
-    const art = card.querySelector('.card-art');
-    if(!art || art.querySelector('.card-thumb-img')) return; // already applied
-    const img = document.createElement('img');
-    img.src = data.thumbnail;
-    img.alt = data.title;
-    img.className = 'card-thumb-img';
-    img.loading = 'lazy';
-    img.onerror = () => img.remove(); // keep the illustration if the photo 404s
-    art.insertBefore(img, art.firstChild);
-  });
-}
+
+  function applyCardThumbnails(){
+    document.querySelectorAll('.card[data-slug]').forEach(card => {
+      const slug = card.getAttribute('data-slug');
+      const data = GALLERY_DATA[slug];
+      if(!data || !data.thumbnail) return;
+      const art = card.querySelector('.card-art');
+      if(!art || art.querySelector('.card-thumb-img')) return;
+      const img = document.createElement('img');
+      img.src = data.thumbnail;
+      img.alt = data.title;
+      img.className = 'card-thumb-img';
+      img.loading = 'lazy';
+      img.onerror = () => img.remove();
+      art.insertBefore(img, art.firstChild);
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', loadGoogleCalendar);
 
-  /* ===== SCROLL-REVEAL ===== */
   const revealObserver = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
@@ -1096,11 +1047,10 @@ function applyCardThumbnails(){
   function observeReveals(){
     document.querySelectorAll('.reveal:not(.in-view)').forEach(el => {
       if(revealObserver){ revealObserver.observe(el); }
-      else { el.classList.add('in-view'); } // no IO support — just show it
+      else { el.classList.add('in-view'); }
     });
   }
 
-  /* ===== SLIDING NAV INDICATOR ===== */
   function moveNavIndicator(id){
     const btn = document.querySelector(`nav.tabs button[data-panel="${id}"]`);
     const indicator = document.getElementById('nav-indicator');
@@ -1116,12 +1066,13 @@ function applyCardThumbnails(){
     document.querySelector('nav.tabs').classList.remove('open');
     window.scrollTo({top:0, behavior:'smooth'});
     moveNavIndicator(id);
-    observeReveals(); // in case switching panels reveals elements already in view
+    observeReveals();
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     observeReveals();
     moveNavIndicator('home');
+    applyCardThumbnails();
   });
   window.addEventListener('resize', () => {
     const active = document.querySelector('nav.tabs button.active');
@@ -1134,7 +1085,7 @@ function applyCardThumbnails(){
     const age = document.getElementById('cf-age').value;
     const msg = document.getElementById('cf-msg').value;
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nAge: ${age}\n\n${msg}`);
-    window.location.href = `mailto:crew2140@example.org?subject=Crew%202140%20Contact&body=${body}`;
+    window.location.href = `mailto:vpcoms140@gmail.com?subject=Crew%202140%20Contact&body=${body}`;
   }
 </script>
 </body>
