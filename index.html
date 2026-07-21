@@ -81,9 +81,9 @@
     background:none; border:none; color:var(--parchment-dim);
     font-family:'JetBrains Mono'; font-size:12.5px; letter-spacing:0.06em;
     padding:10px 14px; cursor:pointer; position:relative; text-transform:uppercase;
-    transition:color 0.2s;
+    transition:color 0.2s, transform 0.2s;
   }
-  nav.tabs button:hover{color:var(--parchment);}
+  nav.tabs button:hover{color:var(--topo-gold); transform:scale(1.1);}
   nav.tabs button.active{color:var(--topo-gold);}
   .nav-indicator{
     position:absolute; bottom:2px; height:2px; background:var(--rust);
@@ -730,8 +730,8 @@
           <div class="itext"><strong>Email</strong><a href="mailto:vpcoms140@gmail.com">vpcoms140@gmail.com</a></div>
         </li>
         <li>
-          <div class="info-icon">☎</div>
-          <div class="itext"><strong>Crew Advisor</strong><span>eegrindle@gmail.com</span></div>
+          <div class="info-icon">@</div>
+          <div class="itext"><strong>Crew Advisor</strong><a href="mailto:eegrindle@gmail.com">eegrindle@gmail.com</a></div>
         </li>
         <li>
           <div class="info-icon">⌂</div>
@@ -902,9 +902,9 @@
   const GALLERY_DATA = {
     "canoeing": {
       title: "Canoeing",
-      thumbnail: "images/backpacking/2.jpg",
+      thumbnail: "images/backpacking/1.jpg",
       photos: [
-        "images/backpacking/1.JPG",
+        "images/backpacking/1.jpg",
         "images/backpacking/2.jpg",
         "images/backpacking/3.jpg",
         "images/backpacking/4.jpg",
