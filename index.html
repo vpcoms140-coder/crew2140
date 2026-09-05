@@ -572,22 +572,6 @@
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from backpacking" onclick="openGallery('backpacking-trips')" data-slug="backpacking-trips" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('backpacking-trips')}">
-        <div class="card-art"><span class="view-photos-tag">View Photos</span>
-          <svg viewBox="0 0 200 130" width="100%">
-            <rect width="200" height="130" fill="#171d1b"/>
-            <polygon points="20,110 60,40 100,110" fill="#324a3b"/>
-            <polygon points="80,110 130,30 180,110" fill="#25382c" stroke="#c9a55c" stroke-width="1.5"/>
-            <polygon points="70,70 80,55 90,70" fill="#efe8d8"/>
-            <polygon points="120,60 130,45 140,60" fill="#efe8d8"/>
-            <polygon points="60,95 80,65 100,95" fill="#b5542a" opacity="0.9"/>
-          </svg>
-        </div>
-        <div class="card-body">
-          <h3>Backpacking</h3>
-          <p>Treks in locations all across the US, from the deserts of New Mexico to the Cliffs of the Pacific Northwest.</p>
-        </div>
-      </div>
 
       <div class="card reveal" role="button" tabindex="0" aria-label="View photos from winter camping" onclick="openGallery('winter-camping')" data-slug="winter-camping" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('winter-camping')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
@@ -624,37 +608,6 @@
         </div>
       </div>
 
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from high adventure" onclick="openGallery('high-adventure')" data-slug="high-adventure" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('high-adventure')}">
-        <div class="card-art"><span class="view-photos-tag">View Photos</span>
-          <svg viewBox="0 0 200 130" width="100%">
-            <rect width="200" height="130" fill="#171d1b"/>
-            <polygon points="170,110 190,60 210,110" fill="#324a3b"/>
-            <polygon points="20,20 40,40 20,60 0,40" fill="#b5542a"/>
-            <polygon points="60,25 80,45 60,65 40,45" fill="#d16a3d"/>
-            <polygon points="100,20 120,40 100,60 80,40" fill="#c9a55c"/>
-            <line x1="0" y1="110" x2="200" y2="110" stroke="#7e97a1" stroke-width="2"/>
-          </svg>
-        </div>
-        <div class="card-body">
-          <h3>National High Adventure Bases</h3>
-          <p>Crew fundraises toward a flagship trip &mdash; Philmont, Sea Base, or Northern Tier &mdash; anytime the crew desires!</p>
-        </div>
-      </div>
-
-      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from leadership" onclick="openGallery('leadership')" data-slug="leadership" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('leadership')}">
-        <div class="card-art"><span class="view-photos-tag">View Photos</span>
-          <svg viewBox="0 0 200 130" width="100%">
-            <rect width="200" height="130" fill="#171d1b"/>
-            <circle cx="100" cy="60" r="30" fill="#25382c" stroke="#c9a55c" stroke-width="2"/>
-            <polygon points="100,40 106,55 122,55 109,65 114,80 100,71 86,80 91,65 78,55 94,55" fill="#c9a55c"/>
-            <rect x="70" y="100" width="60" height="8" fill="#7e97a1"/>
-          </svg>
-        </div>
-        <div class="card-body">
-          <h3>Leadership &amp; Awards</h3>
-          <p>Leadership opportunities galore, with all youth positions being open to people with all levels of experience! Rank advancement to the Summit award is guided, and encouraged, but not required!</p>
-        </div>
-      </div>
 
     </div>
   </section>
@@ -1060,10 +1013,6 @@ function openGallery(slug){
     overlay.querySelector('.gallery-close').focus();
   }
 
-    const overlay = document.getElementById('gallery-overlay');
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    overlay.querySelector('.gallery-close').focus();
   
 
   function closeGallery(){
