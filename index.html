@@ -539,6 +539,22 @@
     </div>
     <div class="card-grid">
 
+      <div class="card reveal" role="button" tabindex="0" aria-label="View photos from U.P. Adventure" onclick="openGallery('up-adventure')" data-slug="up-adventure" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('up-adventure')}">
+  <div class="card-art"><span class="view-photos-tag">View Photos</span>
+    <svg viewBox="0 0 200 130" width="100%">
+      <rect width="200" height="130" fill="#171d1b"/>
+      <polygon points="40,100 80,30 120,100" fill="#25382c" stroke="#324a3b" stroke-width="2"/>
+      <polygon points="90,100 130,40 170,100" fill="#324a3b" stroke="#c9a55c" stroke-width="1.5"/>
+      <rect x="0" y="100" width="200" height="30" fill="#7e97a1" opacity="0.8"/>
+      <path d="M0 110 Q 20 115 40 110 T 80 110 T 120 110 T 160 110 T 200 110" fill="none" stroke="#efe8d8" stroke-width="1" opacity="0.5"/>
+    </svg>
+  </div>
+  <div class="card-body">
+    <h3>U.P. Adventure</h3>
+    <p>Our recent summer trek up to the Upper Peninsula of Michigan.</p>
+  </div>
+</div>
+
       <div class="card reveal" role="button" tabindex="0" aria-label="View photos from canoeing" onclick="openGallery('canoeing')" data-slug="canoeing" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGallery('canoeing')}">
         <div class="card-art"><span class="view-photos-tag">View Photos</span>
           <svg viewBox="0 0 200 130" width="100%">
@@ -830,12 +846,21 @@
 </footer>
 
 <!-- Reusable photo gallery modal — opened by clicking any Adventures card -->
+<!-- Reusable photo gallery modal -->
 <div id="gallery-overlay" onclick="if(event.target===this) closeGallery()" aria-hidden="true">
   <div class="gallery-box" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
     <button class="gallery-close" onclick="closeGallery()" aria-label="Close gallery">&times;</button>
     <h3 class="gallery-title" id="gallery-title">Activity</h3>
     <p class="gallery-sub" id="gallery-sub">0 photos</p>
     <div class="gallery-grid" id="gallery-grid"></div>
+    
+    <!-- New Button Container -->
+    <div id="gallery-footer" style="margin-top: 32px; text-align: center; display: none;">
+      <a href="#" id="gallery-album-link" target="_blank" rel="noopener noreferrer" class="btn-glow">
+        See Full Album
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px; height:14px; margin-left:6px;"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -961,14 +986,17 @@
 
       ]
     },
-    "backpacking-trips": {
-      title: "Backpacking",
+     "up-adventure": {
+      title: "U.P. Adventure",
+      albumLink: "https://photos.app.goo.gl/LRRJ4aoR13V5dA7G9",
       photos: [
-        "images/backpacking-trips/1.jpg",
-        "images/backpacking-trips/2.jpg",
-        "images/backpacking-trips/3.jpg"
+        "images/up-adventure/1.jpg",
+        "images/up-adventure/2.jpg",
+        "images/up-adventure/3.jpg",
+        "images/up-adventure/4.jpg" // Keep a few highlights for the website grid
       ]
     },
+
     "winter-camping": {
       title: "Winter Camping",
       photos: [
@@ -984,22 +1012,6 @@
         "images/day-activities/2.jpg",
         "images/day-activities/3.jpg"
       ]
-    },
-    "high-adventure": {
-      title: "National High Adventure Bases",
-      photos: [
-        "images/high-adventure/1.jpg",
-        "images/high-adventure/2.jpg",
-        "images/high-adventure/3.jpg"
-      ]
-    },
-    "leadership": {
-      title: "Leadership & Awards",
-      photos: [
-        "images/leadership/1.jpg",
-        "images/leadership/2.jpg",
-        "images/leadership/3.jpg"
-      ]
     }
   };
 
@@ -1010,7 +1022,7 @@
 
   let lastFocusedBeforeGallery = null;
 
-  function openGallery(slug){
+function openGallery(slug){
     const data = GALLERY_DATA[slug];
     if(!data) return;
     lastFocusedBeforeGallery = document.activeElement;
@@ -1030,11 +1042,29 @@
         </div>
       </div>`).join('');
 
+    // --- NEW LOGIC FOR THE ALBUM BUTTON ---
+    const footer = document.getElementById('gallery-footer');
+    const albumLinkBtn = document.getElementById('gallery-album-link');
+    
+    if (data.albumLink) {
+      footer.style.display = 'block';
+      albumLinkBtn.href = data.albumLink;
+    } else {
+      footer.style.display = 'none';
+    }
+    // --------------------------------------
+
     const overlay = document.getElementById('gallery-overlay');
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
     overlay.querySelector('.gallery-close').focus();
   }
+
+    const overlay = document.getElementById('gallery-overlay');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    overlay.querySelector('.gallery-close').focus();
+  
 
   function closeGallery(){
     const overlay = document.getElementById('gallery-overlay');
